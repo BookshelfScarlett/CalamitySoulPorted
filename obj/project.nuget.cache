@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "NEAdrbORLp8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\25239\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\CalamitySoulPorted\\CalamitySoulPorted.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\25239\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

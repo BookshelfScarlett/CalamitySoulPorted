@@ -1,0 +1,71 @@
+AncientGodSlayerEnchant: {
+	// Tooltip: ""
+	// DisplayName: Ancient God Slayer Enchant
+}
+
+AuricTeslaEnchant: {
+	// DisplayName: Auric Tesla Enchant
+	// Tooltip: ""
+}
+
+BloodflareEnchant: {
+	// DisplayName: Bloodflare Enchant
+	// Tooltip: ""
+}
+
+CalamityEnchant: {
+	// DisplayName: Calamity Enchant
+	// Tooltip: ""
+}
+
+DemonshadeEnchant: {
+	// DisplayName: Demonshade Enchant
+	// Tooltip: ""
+}
+
+EmpyreanEnchant: {
+	// DisplayName: Empyrean Enchant
+	// Tooltip: ""
+}
+
+FearmongerEnchant: {
+	// DisplayName: Fearmonger Enchant
+	// Tooltip: ""
+}
+
+GemTechEnchant: {
+	// DisplayName: Gem Tech Enchant
+	// Tooltip: ""
+}
+
+GodslayerEnchant: {
+	// DisplayName: Godslayer Enchant
+	// Tooltip: ""
+}
+
+OmegaBlueEnchant: {
+	// DisplayName: Omega Blue Enchant
+	// Tooltip: ""
+}
+
+PrismaticEnchant: {
+	// DisplayName: Prismatic Enchant
+	// Tooltip: ""
+}
+
+SilvaEnchant: {
+	DisplayName: 始源林海
+	Tooltip:
+		'''
+		「神话树妖闭上了她的双眼。」
+		法术伤害偶尔会为你提供极其高频的治疗
+		承受致命伤害时启用林海免死，使你接下来15秒内无法死亡
+		允许飞行，并在触发林海免死时恢复最大生命值的1/2血量
+		攻击时掷出炼金术瓶
+		'''
+}
+
+TarragonEnchant: {
+	// DisplayName: Tarragon Enchant
+	// Tooltip: ""
+}

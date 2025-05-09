@@ -1,0 +1,59 @@
+AstralEnchant: {
+	DisplayName: Astral Enchant
+	Tooltip: ""
+}
+
+BrimflameEnchant: {
+	DisplayName: Brimflame Enchant
+	Tooltip: ""
+}
+
+DaedalusEnchant: {
+	DisplayName: Daedalus Enchant
+	Tooltip: ""
+}
+
+FathomSwarmerEnchant: {
+	DisplayName: Fathom Swarmer Enchant
+	Tooltip: ""
+}
+
+HydrothermicEnchant: {
+	DisplayName: Hydrothermic Enchant
+	Tooltip: ""
+}
+
+MolluskEnchant: {
+	DisplayName: Mollusk Enchant
+	Tooltip: ""
+}
+
+PlaguebringerEnchant: {
+	DisplayName: Plaguebringer Enchant
+	Tooltip: ""
+}
+
+PlagueReaperEnchant: {
+	DisplayName: Plague Reaper Enchant
+	Tooltip: ""
+}
+
+ReaverEnchant: {
+	DisplayName: Reaver Enchant
+	Tooltip: ""
+}
+
+SulphurousEnchant: {
+	DisplayName: Sulphurous Enchant
+	Tooltip: ""
+}
+
+TitanHeartEnchant: {
+	DisplayName: Titan Heart Enchant
+	Tooltip: ""
+}
+
+UmbraphileEnchant: {
+	DisplayName: Umbraphile Enchant
+	Tooltip: ""
+}

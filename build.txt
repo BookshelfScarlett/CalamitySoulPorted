@@ -1,0 +1,4 @@
+displayName = CalamitySoulPorted
+author = Scarlet/Plantare
+version = 0.1
+modReferences = CalamityMod

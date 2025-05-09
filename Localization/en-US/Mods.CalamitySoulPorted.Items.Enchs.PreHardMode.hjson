@@ -1,0 +1,44 @@
+AncientVictideEnchant: {
+	DisplayName: Ancient Victide Enchant
+	Tooltip: ""
+}
+
+AncientWulfrumEnchant: {
+	DisplayName: Ancient Wulfrum Enchant
+	Tooltip: ""
+}
+
+AerospecEnchant: {
+	DisplayName: Aerospec Enchant
+	Tooltip: ""
+}
+
+DesertProwlerEnchant: {
+	DisplayName: Desert Prowler Enchant
+	Tooltip: ""
+}
+
+MarniteArchitectEnchant: {
+	DisplayName: Marnite Architect Enchant
+	Tooltip: ""
+}
+
+SnowRuffianEnchant: {
+	DisplayName: Snow Ruffian Enchant
+	Tooltip: ""
+}
+
+StatigelEnchant: {
+	DisplayName: Statigel Enchant
+	Tooltip: ""
+}
+
+VictideEnchant: {
+	DisplayName: Victide Enchant
+	Tooltip: ""
+}
+
+WulfrumEnchant: {
+	DisplayName: Wulfrum Enchant
+	Tooltip: ""
+}

@@ -1,0 +1,64 @@
+AncientGodSlayerEnchant: {
+	Tooltip: ""
+	DisplayName: Ancient God Slayer Enchant
+}
+
+AuricTeslaEnchant: {
+	DisplayName: Auric Tesla Enchant
+	Tooltip: ""
+}
+
+BloodflareEnchant: {
+	DisplayName: Bloodflare Enchant
+	Tooltip: ""
+}
+
+CalamityEnchant: {
+	DisplayName: Calamity Enchant
+	Tooltip: ""
+}
+
+DemonshadeEnchant: {
+	DisplayName: Demonshade Enchant
+	Tooltip: ""
+}
+
+EmpyreanEnchant: {
+	DisplayName: Empyrean Enchant
+	Tooltip: ""
+}
+
+FearmongerEnchant: {
+	DisplayName: Fearmonger Enchant
+	Tooltip: ""
+}
+
+GemTechEnchant: {
+	DisplayName: Gem Tech Enchant
+	Tooltip: ""
+}
+
+GodslayerEnchant: {
+	DisplayName: Godslayer Enchant
+	Tooltip: ""
+}
+
+OmegaBlueEnchant: {
+	DisplayName: Omega Blue Enchant
+	Tooltip: ""
+}
+
+PrismaticEnchant: {
+	DisplayName: Prismatic Enchant
+	Tooltip: ""
+}
+
+SilvaEnchant: {
+	DisplayName: Silva Enchant
+	Tooltip: ""
+}
+
+TarragonEnchant: {
+	DisplayName: Tarragon Enchant
+	Tooltip: ""
+}
