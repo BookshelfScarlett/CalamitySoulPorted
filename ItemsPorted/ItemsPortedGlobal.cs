@@ -16,7 +16,7 @@ namespace CalamitySoulPorted.ItemsPorted
 
             var usPlayer = player.Soul();
             //林海与炼金狂人射弹。
-            if (usPlayer.SilvaEnch && item.CountsAsClass<MagicDamageClass>())
+            if (usPlayer.SilvaEnch && item.CountClassAs<MagicDamageClass>())
             {
                 int[] FlaskIDs =
                 [

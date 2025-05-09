@@ -45,20 +45,25 @@ namespace CalamitySoulPorted.SoulMethods
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<T>()] = result;
             ItemID.Sets.ShimmerTransformToItem[result] = ModContent.ItemType<T>();
         }
-        // public static bool MagicClass(this object item)
-        // {
-        //     //拆箱
-        //     if (item is Item unbox)
-        //         return unbox.CountsAsClass<MagicDamageClass>() || unbox.CountsAsClass<MagicSummonHybridDamageClass>();
+        /// <summary>
+        /// 集成装箱/拆箱与类型选择的查阅伤害类型的方法
+        /// </summary>
+        /// <typeparam name="T">伤害类型</typeparam>
+        /// <param name="item">任意具备伤害类型的实例</param>
+        /// <returns>真：为你输入的伤害类型</returns>
+        public static bool CountClassAs<T>(this object item) where T : DamageClass
+        {
+            //拆箱
+            if (item is Item unbox)
+                return unbox.CountsAsClass<T>();
             
-        //     if (item is NPC.HitInfo hitBox)
-        //         return hitBox.DamageType == DamageClass.Magic || hitBox.DamageType == DamageClass.MagicSummonHybrid;
+            if (item is NPC.HitInfo hitBox)
+                return hitBox.DamageType == ModContent.GetInstance<T>();
 
-        //     if (item is Projectile projBox) 
-        //         return projBox.CountsAsClass<MagicDamageClass>() || projBox.CountsAsClass<MagicSummonHybridDamageClass>();
-            
-        //     return false;
-        // }
+            if (item is Projectile projBox) 
+                return projBox.CountsAsClass<T>();
+            return false;
+        }
     }
 
 }
