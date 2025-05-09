@@ -57,3 +57,8 @@ UmbraphileEnchant: {
 	// DisplayName: Umbraphile Enchant
 	// Tooltip: ""
 }
+
+ForbiddenEnchant: {
+	// DisplayName: Forbidden Enchant
+	// Tooltip: ""
+}

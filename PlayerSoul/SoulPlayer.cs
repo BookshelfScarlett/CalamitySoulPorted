@@ -56,7 +56,6 @@ namespace CalamitySoulPorted.PlayerSoul
             ResetEnchPreHM();
             ResetEnchHM();
             ResetEnchPostML();
-            base.ResetEffects();
         }
 
         private void ResetEnchPostML()
@@ -108,13 +107,11 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             GetAcceleration = 1f;
             GetRunSpeed = 1f;
-            IsUsedEnchSilvaReborn = false;
         }
 
         public override void UpdateDead()
         {
             IsUsedEnchSilvaReborn = false;
-            base.UpdateDead();
         }
     }
 }

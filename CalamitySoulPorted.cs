@@ -11,8 +11,11 @@ namespace CalamitySoulPorted
 	public class CalamitySoulPorted : Mod
 	{
 		public static Mod Calamity => ModLoader.GetMod("CalamityMod");
-		public static CalamitySoulPorted Instance;
-		public override void Load()
+
+        public static CalamitySoulPorted Instance { get => instance; set => instance = value; }
+
+        private static CalamitySoulPorted instance;
+        public override void Load()
 		{
 			base.Load();
 		}

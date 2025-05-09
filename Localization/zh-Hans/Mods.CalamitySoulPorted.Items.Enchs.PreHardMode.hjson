@@ -42,3 +42,8 @@ WulfrumEnchant: {
 	// DisplayName: Wulfrum Enchant
 	// Tooltip: ""
 }
+
+OldHunterEnchant: {
+	// DisplayName: Old Hunter Enchant
+	// Tooltip: ""
+}

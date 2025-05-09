@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.RarityCustom
 {
-    public partial class EnchPreHardMode: ModRarity
+    public class EnchPreHardMode: ModRarity
     {
         //花园绿，应介于绿->橙之间
         public override Color RarityColor => new (124,252,0);
@@ -18,7 +18,7 @@ namespace CalamitySoulPorted.RarityCustom
             _ => Type
         };
     }
-    public partial class EnchHardMode : ModRarity
+    public class EnchHardMode : ModRarity
     {
         //火砖, 介于青->红之间
         public override Color RarityColor => new (178,34,34);
@@ -31,7 +31,7 @@ namespace CalamitySoulPorted.RarityCustom
             _ => Type
         };
     }
-    public partial class EnchPostML : ModRarity
+    public class EnchPostML : ModRarity
     {
         //与原灾的紫色同级
         public override Color RarityColor => new (153,50,204);
@@ -44,7 +44,7 @@ namespace CalamitySoulPorted.RarityCustom
             _ => Type
         };
     }
-    public partial class Force : ModRarity
+    public class Force : ModRarity
     {
         //这一稀有度颜色与原灾的pink同等级。
         public override Color RarityColor => new (255,105,180);

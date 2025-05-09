@@ -43,7 +43,6 @@ namespace CalamitySoulPorted.PlayerSoul
         }
         public override void OnHurt(Player.HurtInfo info)
         {
-            base.OnHurt(info);
         }
     }
 }

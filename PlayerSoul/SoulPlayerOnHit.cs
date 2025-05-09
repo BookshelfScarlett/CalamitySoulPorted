@@ -33,7 +33,7 @@ namespace CalamitySoulPorted.PlayerSoul
             if (!SilvaEnch)
                 return;
             //暴击、魔法伤害，符合条件，触发林海强起
-            if (hit.DamageType == DamageClass.Magic && hit.Crit)
+            if (hit.CountClassAs<MagicDamageClass>() && hit.Crit)
             {
                 if (EnchSilvaForceHealCD == 0 && Main.rand.NextBool(3))
                 {

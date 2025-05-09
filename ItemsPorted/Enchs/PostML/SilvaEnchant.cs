@@ -32,6 +32,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
         {
             //启用魂石效果
             player.Soul().SilvaEnch = true;
+            player.noFallDmg = true;
             //Wing's Effect
             if (player.controlJump && player.wingTime > 0f && player.jump == 0 && player.velocity.Y != 0f && !hideVisual)
             {
@@ -43,9 +44,8 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
                 Main.dust[flyingDust].velocity *= 0.3f;
                 if (Main.rand.NextBool(10)) 
                     Main.dust[flyingDust].fadeIn = 2f;
-                Main.dust[flyingDust].shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
+                // Main.dust[flyingDust].shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
             }
-            player.noFallDmg = true;
         }
         public override void AddRecipes()
         {
@@ -61,14 +61,14 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
                 Register();
         }
         #region Wing's Stat
-        // public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
-        // {
-        //     ascentWhenFalling = 0.95f;
-        //     ascentWhenRising = 0.16f;
-        //     maxCanAscendMultiplier = 1.1f;
-        //     maxAscentMultiplier = 3.2f;
-        //     constantAscend = 0.145f;
-        // }
+        public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
+        {
+            ascentWhenFalling = 0.95f;
+            ascentWhenRising = 0.16f;
+            maxCanAscendMultiplier = 1.1f;
+            maxAscentMultiplier = 3.2f;
+            constantAscend = 0.145f;
+        }
         #endregion
     }
 }

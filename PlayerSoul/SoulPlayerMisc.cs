@@ -97,7 +97,6 @@ namespace CalamitySoulPorted.PlayerSoul
                     Player.statLife += 5;
                     Player.HealEffect(5);
                 }
-
             }
             #endregion
         }

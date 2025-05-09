@@ -6,9 +6,9 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs
 {
     public abstract class GenericEnchant : ModItem
     {
-        public static string PreHardMode => PreHardMode; 
-        public static string HardMode => HardMode;
-        public static string PostML => PostML;
+        public static string PreHardMode => "PreHardMode"; 
+        public static string HardMode => "HardMode";
+        public static string PostML => "PostML";
         public virtual string Category{get;}
         public new string LocalizationCategory => "Items.Enchs" + "." + Category;
         public virtual int GiveValue => 100;
