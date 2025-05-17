@@ -1,3 +1,5 @@
+using System;
+using CalamityMod;
 using CalamityMod.Projectiles.Magic;
 using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
@@ -18,6 +20,24 @@ namespace CalamitySoulPorted.ItemsPorted
             //林海与炼金狂人射弹。
             if (usPlayer.SilvaEnch && item.CountClassAs<MagicDamageClass>())
             {
+                for (int i = 0; i < 3; i++)
+                EnchSilvaFlasks(source, damage, player);
+            }
+            //皇天效果：强制潜伏攻击。
+            if (usPlayer.EmpyreanEnch && item.CountClassAs<RogueDamageClass>() && !player.CheckStealth())
+            {
+                int forceDamage = (int)(damage * 0.25f);
+                int p = Projectile.NewProjectile(source, position, velocity, type, forceDamage, knockback, player.whoAmI);
+                Main.projectile[p].Calamity().stealthStrike = true;
+                return false;
+            }
+            return true;
+        }
+
+        
+        #region EnchShoot
+        public static void EnchSilvaFlasks(EntitySource_ItemUse_WithAmmo source, int damage, Player player)
+        {
                 int[] FlaskIDs =
                 [
                     ModContent.ProjectileType<MadAlchemistsCocktailRed>(),
@@ -29,10 +49,19 @@ namespace CalamitySoulPorted.ItemsPorted
                 int idRandom = Main.rand.Next(0, 5);
                 //瓶子射弹伤害为每个射弹的20%
                 int flaskDamage = damage / 5;
-                Projectile.NewProjectile(source, position, velocity * 1.1f, FlaskIDs[idRandom], flaskDamage, 0f, player.whoAmI);
-            }
-            return true;
+                //我们重设定攻击方式与范围
+                float srcX = Main.MouseWorld.X + Main.rand.NextFloat(-200, 201f);
+                float srcY = Main.MouseWorld.Y - Main.rand.NextFloat(-500, -700f);
+                Vector2 srcPos = new(srcX, srcY);
+                Vector2 distVec = Main.MouseWorld - srcPos;
+                //转速度向量
+                float dist = distVec.Length();
+                dist = 30f / dist;
+                distVec.X *= dist;
+                distVec.Y *= dist;
+                int flask = Projectile.NewProjectile(source, srcPos, distVec, FlaskIDs[idRandom], flaskDamage, 0f, player.whoAmI);
+                Main.projectile[flask].scale *= 1.5f;
         }
-
+        #endregion
     }
 }

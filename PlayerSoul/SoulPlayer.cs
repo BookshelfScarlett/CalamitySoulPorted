@@ -1,3 +1,5 @@
+using System;
+using CalamityMod;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.PlayerSoul
@@ -50,15 +52,65 @@ namespace CalamitySoulPorted.PlayerSoul
         //林海强起
         public bool IsUsedEnchSilvaReborn = false;
         #endregion
+        #region Buffs
+        public bool EnchUmbraphileBuff = false;
+        #endregion
+        #region EnchPower
+        //皇天强制潜伏属性
+        public bool EmpyreanEnchForceStealth = false;
+        #endregion
         public override void ResetEffects()
         {
             ResetNumber();
             ResetEnchPreHM();
             ResetEnchHM();
             ResetEnchPostML();
+            ResetEnchPower();
+            ResetTrigger();
+        }
+        public override void UpdateDead()
+        {
+            IsUsedEnchSilvaReborn = false;
+            UpdateDeadTrigger();
+        }
+        public override void UpdateEquips()
+        {
+            UpdateEnch();
+            UpdateEnchPower();
+        }
+        #region Update Equips
+        public void UpdateEnchPower()
+        {
+            if (EmpyreanEnchForceStealth)
+            {
+                Player.Calamity().wearingRogueArmor = true;
+            }
         }
 
-        private void ResetEnchPostML()
+        public void UpdateEnch()
+        {
+            //皇天魔石:继承日影魔石 + 启用盗贼潜伏 + 20潜伏值
+            if (EmpyreanEnch)
+            {
+                Player.Calamity().rogueStealthMax += 0.2f;
+                EmpyreanEnchForceStealth = true;
+                UmbraphileEnch = true;
+            }
+        }
+        #endregion
+        public override void PostUpdateRunSpeeds()
+        {
+            #region CustomDash
+
+            #endregion
+        }
+        #region Reset
+        public void ResetEnchPower()
+        {
+            EmpyreanEnchForceStealth = false;
+        }
+
+        public void ResetEnchPostML()
         {
             EmpyreanEnch = false;
             SilvaEnch = false;
@@ -75,7 +127,7 @@ namespace CalamitySoulPorted.PlayerSoul
             CalamitasEnch = false;
         }
 
-        private void ResetEnchHM()
+        public void ResetEnchHM()
         {
             DaedalusEnch = false;
             PlaguebringerEnch = false;
@@ -91,7 +143,7 @@ namespace CalamitySoulPorted.PlayerSoul
             ForbiddenEnch = false;
         }
 
-        private void ResetEnchPreHM()
+        public void ResetEnchPreHM()
         {
             WulfrumEnch = false;
             MarniteArchitectEnch = false;
@@ -108,10 +160,6 @@ namespace CalamitySoulPorted.PlayerSoul
             GetAcceleration = 1f;
             GetRunSpeed = 1f;
         }
-
-        public override void UpdateDead()
-        {
-            IsUsedEnchSilvaReborn = false;
-        }
+        #endregion
     }
 }

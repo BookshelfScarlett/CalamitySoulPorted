@@ -44,7 +44,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
                 Main.dust[flyingDust].velocity *= 0.3f;
                 if (Main.rand.NextBool(10)) 
                     Main.dust[flyingDust].fadeIn = 2f;
-                // Main.dust[flyingDust].shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
+                Main.dust[flyingDust].shader = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
             }
         }
         public override void AddRecipes()

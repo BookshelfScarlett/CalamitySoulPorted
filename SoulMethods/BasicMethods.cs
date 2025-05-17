@@ -1,10 +1,13 @@
 using System;
+using CalamityMod;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.SlimeGod;
 using CalamitySoulPorted.ItemsPorted;
 using CalamitySoulPorted.PlayerSoul;
+using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
@@ -20,7 +23,13 @@ namespace CalamitySoulPorted.SoulMethods
         public static void NameHelperGroup(this RecipeGroup group, string name) => RecipeGroup.RegisterGroup("Soul:" + "Any" + name, group);
         //获取合成组名字
         public static string GetNameGroup(this string name) => "Soul:" + "Any" + name;
-        //查看是否为boss单位
+        public static ModKeybind BindKeyBetter(this Mod mod, string name, Keys key) => KeybindLoader.RegisterKeybind(mod, name, key);
+        public static bool CheckStealth(this Player player) => player.Calamity().StealthStrikeAvailable();
+        /// <summary>
+        /// 确认是否为Boss单位，去掉了火星飞碟
+        /// </summary>
+        /// <param name="npc">npc</param>
+        /// <returns></returns>
         public static bool CheckBoss(this NPC npc)
         {
             //第一步，去掉火星飞碟
@@ -64,6 +73,8 @@ namespace CalamitySoulPorted.SoulMethods
                 return projBox.CountsAsClass<T>();
             return false;
         }
+        public static LocalizedText GetText(string value) => Language.GetOrRegister("Mods.CalamitySoulPorted.Cooldowns" + "." +  value);
+        public static string CDPathValue(string wantedCooldowned) => "CalamitySoulPorted/SoulCooldowns" + "/" + wantedCooldowned;
     }
 
 }

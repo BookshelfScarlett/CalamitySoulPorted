@@ -24,8 +24,16 @@ DemonshadeEnchant: {
 }
 
 EmpyreanEnchant: {
-	// DisplayName: Empyrean Enchant
-	// Tooltip: ""
+	DisplayName: 皇天
+	Tooltip:
+		'''
+		「我诞生于暗影之中。」
+		[i:CalamitySoulPorted/UmbraphileEnchant]你所有的暴击攻击造成日影爆炸
+		[i:CalamitySoulPorted/UmbraphileEnchant]在停止攻击10秒后，增强10%全局攻击速度，且使你获得一次闪避的机会
+		[i:CalamityMod/EmpyreanMask]强制部分盗贼武器发起潜伏攻击，即使不满足启用潜伏攻击的条件
+		[i:CalamityMod/EmpyreanCloak]强制发起潜伏攻击的武器会降低85%伤害
+		[i:CalamityMod/EmpyreanCuisses]无需盗贼套装也能启用潜伏攻击
+		'''
 }
 
 FearmongerEnchant: {
@@ -61,7 +69,7 @@ SilvaEnchant: {
 		法术伤害偶尔会为你提供极其高频的治疗
 		承受致命伤害时启用林海假死，使你接下来15秒内无法死亡
 		允许飞行，并在触发林海假死时恢复最大生命值的1/2血量
-		攻击时掷出炼金术瓶
+		攻击时炼金术瓶从天而降
 		'''
 }
 

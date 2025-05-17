@@ -1,9 +1,12 @@
+using System;
 using CalamityMod;
 using CalamityMod.Buffs.Summon;
 using CalamityMod.Cooldowns;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Projectiles.Summon;
+using CalamitySoulPorted.BuffsPoted;
+using CalamitySoulPorted.SoulSounds;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -19,10 +22,19 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             
             Enchantment();
+            EnchantmentBuff();
             EnchCounters();
             CustomSpeedUpdate();
 
         }
+
+        private void EnchantmentBuff()
+        {
+            //日影魔石 + 10%攻速
+            if (EnchUmbraphileBuff)
+                Player.GetAttackSpeed<GenericDamageClass>() += 0.10f;
+        }
+
         public void Enchantment()
         {
             var calPlayer = Player.Calamity();
@@ -99,6 +111,42 @@ namespace CalamitySoulPorted.PlayerSoul
                 }
             }
             #endregion
+            //日影魔石
+            if (Player.ItemUsesThisAnimation < 1 && UmbraphileEnch && EnchUmbNotHoldingWeaponCounter < EnchUmbNotHoldingWeaponDuration)
+            {
+                EnchUmbNotHoldingWeaponCounter++;
+                if (EnchUmbNotHoldingWeaponCounter == EnchUmbNotHoldingWeaponDuration)
+                {
+                    //这里需要一个tint
+                    SoundEngine.PlaySound(SoulSoundID.SoundFallenStar, Player.Center);
+                    Player.AddBuff(ModContent.BuffType<EnchUmbraphileBuff>(), 6000);
+                }
+            }
+            if (UmbraphileEnch)
+            {
+                //蓄能大于10秒即可
+                if (EnchUmbNotHoldingWeaponCounter >= EnchUmbNotHoldingWeaponDuration)
+                {
+                    //Send a tint.
+                    SoundEngine.PlaySound(SoulSoundID.SoundFallenStar, Player.Center);
+                    //粒子
+                    //Set to -1
+                    EnchUmbNotHoldingWeaponCounter = -1;
+                }
+                if (EnchUmbNotHoldingWeaponCounter >= 0)
+                {
+                    EnchUmbNotHoldingWeaponCounter++;
+                    //日影非手持效果下的降CD
+                    if (Player.itemAnimation > 0) EnchUmbNotHoldingWeaponCounter = 0;
+                }
+                if (EnchUmbNotHoldingWeaponCounter == -1)
+                {
+                    //大于10秒下提供这个buff
+                    Player.AddBuff(ModContent.BuffType<EnchUmbraphileBuff>(), 2);
+                }
+            }
+            if (EmpyreanEnch)
+            
         }
 
         public void EnchSilvaDust()

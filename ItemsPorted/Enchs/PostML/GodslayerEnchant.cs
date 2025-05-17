@@ -2,6 +2,10 @@ using CalamitySoulPorted.SoulMethods;
 using Terraria;
 using Terraria.ModLoader;
 using CalamitySoulPorted.RarityCustom;
+using CalamityMod;
+using System.Text.RegularExpressions;
+using CalamityMod.CalPlayer.Dashes;
+using CalamitySoulPorted.PlayerSoul.SoulDashesManage;
 
 namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
 {
@@ -12,8 +16,17 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
         {
             Item.value = SoulShopValue.EnchPostML;
             Item.rare = ModContent.RarityType<EnchPostML>();
-            base.SetDefaults();
         }
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().GodSlayerEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            var usPlayer = player.Soul();
+            var calPlayer = player.Calamity();
+            usPlayer.GodSlayerEnch = true;
+            if (usPlayer.GodSlayerEnchantDashKeyPressed || player.dashDelay != 0 && calPlayer.LastUsedDashID == GodslayerArmorDash.ID)
+            {
+                calPlayer.DeferredDashID = GodslayerArmorDash.ID;
+                player.dash = 0;
+            }
+        }
     }
 }

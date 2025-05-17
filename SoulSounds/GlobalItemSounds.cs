@@ -1,0 +1,80 @@
+using Terraria.Audio;
+using Terraria.ID;
+
+namespace CalamitySoulPorted.SoulSounds
+{
+    public class SoulSoundID
+    {
+        public static readonly SoundStyle SoundWeaponSwing          = SoundID.Item1;
+        public static readonly SoundStyle SoundSummonPet            = SoundID.Item2;
+        public static readonly SoundStyle SoundPotions              = SoundID.Item3;
+        public static readonly SoundStyle SoundFallenStar           = SoundID.Item4;
+        public static readonly SoundStyle SoundBow                  = SoundID.Item5;
+        public static readonly SoundStyle SoundMagicMirror          = SoundID.Item6;
+        public static readonly SoundStyle SoundBoomerangs           = SoundID.Item7;
+        public static readonly SoundStyle SoundRodofDiscord         = SoundID.Item8;
+        public static readonly SoundStyle SoundStarCannon           = SoundID.Item9;
+        public static readonly SoundStyle SoundHarpoon              = SoundID.Item10;
+        public static readonly SoundStyle SoundGunsFire             = SoundID.Item11;
+        public static readonly SoundStyle SoundLaser                = SoundID.Item12;
+        public static readonly SoundStyle SoundLastPrism            = SoundID.Item13;
+        public static readonly SoundStyle SoundBomb                 = SoundID.Item14;
+        public static readonly SoundStyle SoundPhaseBlade           = SoundID.Item15;
+        public static readonly SoundStyle SoundFart                 = SoundID.Item16;
+        public static readonly SoundStyle SoundDartTrap             = SoundID.Item17;
+        public static readonly SoundStyle SoundLanuchHook           = SoundID.Item18;
+        public static readonly SoundStyle SoundLanuchHook2          = SoundID.Item19;
+        public static readonly SoundStyle SoundCurseFlamesAttack    = SoundID.Item20;
+        public static readonly SoundStyle SoundWaterBolt            = SoundID.Item21;
+        public static readonly SoundStyle SoundDrills               = SoundID.Item22;
+        public static readonly SoundStyle SoundDrills2              = SoundID.Item23;
+        public static readonly SoundStyle SoundSpectreBootsHovering = SoundID.Item24;
+        public static readonly SoundStyle SoundSummonMount          = SoundID.Item25;
+        public static readonly SoundStyle SoundMagicHarp            = SoundID.Item26;
+        public static readonly SoundStyle SoundImpactFrostDagger    = SoundID.Item27;
+        public static readonly SoundStyle SoundLanuchIceRod         = SoundID.Item28;
+        public static readonly SoundStyle SoundManaCrystal          = SoundID.Item29;
+        public static readonly SoundStyle SoundIceRodBlockPlaced    = SoundID.Item30;
+        public static readonly SoundStyle SoundClockworkRifle       = SoundID.Item31;
+        public static readonly SoundStyle SoundWings                = SoundID.Item32;
+        public static readonly SoundStyle SoundLaserDestroyer       = SoundID.Item33;
+        public static readonly SoundStyle SoundFlamethrower         = SoundID.Item34;
+        public static readonly SoundStyle SoundBell                 = SoundID.Item35;
+        public static readonly SoundStyle SoundShotgun              = SoundID.Item36;
+        public static readonly SoundStyle SoundReforging            = SoundID.Item37;
+        public static readonly SoundStyle SoundShoutgunTactical     = SoundID.Item38;
+        public static readonly SoundStyle SoundVampireKnives        = SoundID.Item39;
+        public static readonly SoundStyle SoundSniperRifle          = SoundID.Item40;
+        public static readonly SoundStyle SoundChainGun             = SoundID.Item41;
+        public static readonly SoundStyle SoundFiredMissile         = SoundID.Item42;
+        public static readonly SoundStyle SoundStaffDiamond         = SoundID.Item43;
+        public static readonly SoundStyle SoundXeno                 = SoundID.Item44;
+        public static readonly SoundStyle SoundHoundiusShootius     = SoundID.Item45;
+        public static readonly SoundStyle SoundQueenSpider          = SoundID.Item46;
+        public static readonly SoundStyle SoundTheAxe               = SoundID.Item47;
+        public static readonly SoundStyle SoundBreakingSnowBlock    = SoundID.Item48;
+        public static readonly SoundStyle SoundBreakingSnowBlock2   = SoundID.Item49;
+        public static readonly SoundStyle SoundBreakingIceBlock     = SoundID.Item50;
+        public static readonly SoundStyle SoundImpactSnoball        = SoundID.Item51;
+        public static readonly SoundStyle SoundBreakingMincartTrack = SoundID.Item52;
+        public static readonly SoundStyle SoundMinecartHitTrack     = SoundID.Item53;
+        public static readonly SoundStyle SoundBubblePop            = SoundID.Item54;
+        public static readonly SoundStyle SoundMinecartSlowDown     = SoundID.Item55;
+        public static readonly SoundStyle SoundMinecartBounces      = SoundID.Item56;
+        public static readonly SoundStyle SoundImpactMeowmere       = SoundID.Item57;
+        public static readonly SoundStyle SoundImpactMeowmere2      = SoundID.Item58;
+        public static readonly SoundStyle SoundMoneyTrough          = SoundID.Item59;
+        public static readonly SoundStyle SoundTerraBlade           = SoundID.Item60;
+        public static readonly SoundStyle SoundGrenadeLanucher      = SoundID.Item61;
+        public static readonly SoundStyle SoundGrenadeExplosion     = SoundID.Item62;
+        public static readonly SoundStyle SoundBlowpipe             = SoundID.Item63;
+        public static readonly SoundStyle SoundBlowgun              = SoundID.Item64;
+        public static readonly SoundStyle SoundBlowpipeUsing        = SoundID.Item65;
+        public static readonly SoundStyle SoundNimbusRod            = SoundID.Item66;
+        public static readonly SoundStyle SoundRainbowGun           = SoundID.Item67;
+        public static readonly SoundStyle SoundRainbowGunUsing      = SoundID.Item68;
+        public static readonly SoundStyle SoundStaffofEarth         = SoundID.Item69;
+        public static readonly SoundStyle SoundStaffofEarthUsing    = SoundID.Item70;
+        public static readonly SoundStyle SoundDeathSickle          = SoundID.Item71;
+    }
+}

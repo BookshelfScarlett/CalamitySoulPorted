@@ -1,3 +1,5 @@
+using CalamityMod;
+using CalamityMod.Cooldowns;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.PlayerSoul
@@ -6,15 +8,45 @@ namespace CalamitySoulPorted.PlayerSoul
     {
         public const int EnchSilvaRebornDuration = 900;
         public const int EnchSilvaForceHealDuration = 60;
+        public const int EnchUmbNotHoldingWeaponDuration = 600;
+        #region 林海
         public int EnchSilvaRebornCounter = EnchSilvaRebornDuration;
         //林海强起
         public int EnchSilvaForceHealCounter = 0;
         public int EnchSilvaForceHealCD = 0;
+        #endregion
+        //日影魔石
+        public int EnchUmbBoomCD = 0;
+        public int EnchUmbNotHoldingWeaponCounter = 0;
+        //皇天魔石次数盾
+        public int EmpyreanShieldTimes = 3;
+        public int EmpyreanShieldCD = 120;
+        //弑神魔石冲刺
+        public int GodSlayerEnchDashTime = 0;
+        //弑神魔石的免伤
+        public int GodSlayerEnchDamageReductionCounter = 0;
+        //标记是否已经进入最大CD
+        public bool PingGodSlayerMaxCD = false;
         public void EnchCounters()
         {
             //林海强起 
             if (EnchSilvaForceHealCD > 0)
                 EnchSilvaForceHealCD--;
+            
+            if (EnchUmbBoomCD > 0)
+                EnchUmbBoomCD--;
+            //未佩戴的情况下重置为0
+            if (!UmbraphileEnch)
+                EnchUmbNotHoldingWeaponCounter = 0;
+            
+            if (GodSlayerEnchDamageReductionCounter > 0)
+                GodSlayerEnchDamageReductionCounter--;
+                
+            if (!Player.HasCooldown(GodSlayerDash.ID))
+            {
+                GodSlayerEnchDashTime = 0;
+                PingGodSlayerMaxCD = false;
+            }
         }
     }
 }
