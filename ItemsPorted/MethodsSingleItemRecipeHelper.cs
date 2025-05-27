@@ -3,6 +3,7 @@ using System.Linq;
 using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs.AquaticScourge;
 using CalamityMod.NPCs.AstrumAureus;
+using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.NPCs.CalClone;
@@ -59,66 +60,57 @@ namespace CalamitySoulPorted.ItemsPorted
         public static List<int> BagDropYharon = [];
         public override void Load()
         {
-            List<int>[] list =
-            [
-                BagDropDesertScourge,
-                BagDropCrabulon,
-                BagDropHiveMind,
-                BagDropPerf,
-                BagDropSlimeGod,
-                BagDropCryogen,
-                BagDropAquaticScourge,
-                BagDropBrimstoneElemental,
-                BagDropCalamitasClone,
-                BagDropLeviAndAnahita,
-                BagDropAstrum,
-                BagDropPlagueBringer,
-                BagDropRavager,
-                BagDropDeus,
-                BagDropProvidence,
-                BagDropDragonfolly,
-                BagDropSignus,
-                BagDropCeaselessVoid,
-                BagDropStormWeaver,
-                BagDropPolterghast,
-                BagDropOldDuke,
-                BagDropDevourerofGods,
-                BagDropYharon
-            ];
-            for (int i = 0; i < list.Length; i++)
-                list = [];
+
+            BagDropDesertScourge = [];
+            BagDropCrabulon = [];
+            BagDropHiveMind = [];
+            BagDropPerf = [];
+            BagDropSlimeGod = [];
+            BagDropCryogen = [];
+            BagDropAquaticScourge = [];
+            BagDropBrimstoneElemental = [];
+            BagDropCalamitasClone = [];
+            BagDropLeviAndAnahita = [];
+            BagDropAstrum = [];
+            BagDropPlagueBringer = [];
+            BagDropRavager = [];
+            BagDropDeus = [];
+            BagDropProvidence = [];
+            BagDropDragonfolly = [];
+            BagDropSignus = [];
+            BagDropCeaselessVoid = [];
+            BagDropStormWeaver = [];
+            BagDropPolterghast = [];
+            BagDropOldDuke = [];
+            BagDropDevourerofGods = [];
+            BagDropYharon = [];
         }
         public override void Unload()
         {
-            List<int>[] list =
-            [
-                BagDropDesertScourge,
-                BagDropCrabulon,
-                BagDropHiveMind,
-                BagDropPerf,
-                BagDropSlimeGod,
-                BagDropCryogen,
-                BagDropAquaticScourge,
-                BagDropBrimstoneElemental,
-                BagDropCalamitasClone,
-                BagDropLeviAndAnahita,
-                BagDropAstrum,
-                BagDropPlagueBringer,
-                BagDropRavager,
-                BagDropDeus,
-                BagDropProvidence,
-                BagDropDragonfolly,
-                BagDropSignus,
-                BagDropCeaselessVoid,
-                BagDropStormWeaver,
-                BagDropPolterghast,
-                BagDropOldDuke,
-                BagDropDevourerofGods,
-                BagDropYharon
-            ];
-            for (int i = 0; i < list.Length; i++)
-                list = null;
-          
+            BagDropDesertScourge = null;
+            BagDropCrabulon = null;
+            BagDropHiveMind = null;
+            BagDropPerf = null;
+            BagDropSlimeGod = null;
+            BagDropCryogen = null;
+            BagDropAquaticScourge = null;
+            BagDropBrimstoneElemental = null;
+            BagDropCalamitasClone = null;
+            BagDropLeviAndAnahita = null;
+            BagDropAstrum = null;
+            BagDropPlagueBringer = null;
+            BagDropRavager = null;
+            BagDropDeus = null;
+            BagDropProvidence = null;
+            BagDropDragonfolly = null;
+            BagDropSignus = null;
+            BagDropCeaselessVoid = null;
+            BagDropStormWeaver = null;
+            BagDropPolterghast = null;
+            BagDropOldDuke = null;
+            BagDropDevourerofGods = null;
+            BagDropYharon = null;
+
         }
         #endregion
         public override void PostAddRecipes()
@@ -143,6 +135,7 @@ namespace CalamitySoulPorted.ItemsPorted
             QuickBagList<AstrumAureus>(BagDropAstrum);
             QuickBagList<PlaguebringerGoliath>(BagDropPlagueBringer);
             QuickBagList<RavagerHead>(BagDropRavager);
+            QuickBagList<AstrumDeusHead>(BagDropDeus);
             QuickBagList<Providence>(BagDropProvidence);
 
             //草泥马灾厄
@@ -155,7 +148,7 @@ namespace CalamitySoulPorted.ItemsPorted
             QuickBagList<OldDuke>(BagDropOldDuke);
             QuickBagList<DevourerofGodsHead>(BagDropDevourerofGods);
             QuickBagList<Yharon>(BagDropYharon);
-            #endregion 妈的这也太坐牢了
+            #endregion
 
             #region 注册所有合成表
             //注宝藏袋合成表，这一合成将会把范围扩展至所有给灾厄Boss添加武器掉落的模组
@@ -174,6 +167,8 @@ namespace CalamitySoulPorted.ItemsPorted
                 QuickRecipeSingle(AS, Item<AquaticScourgeBag>(), Tile<StaticRefiner>());
             foreach (int Ice in BagDropCryogen)
                 QuickRecipeSingle(Ice, Item<CryogenBag>(), Tile<StaticRefiner>());
+            foreach (int BE in BagDropBrimstoneElemental)
+                QuickRecipeSingle(BE, Item<BrimstoneWaifuBag>(), Tile<StaticRefiner>());
             foreach (int CC in BagDropCalamitasClone)
                 QuickRecipeSingle(CC, Item<CalamitasCloneBag>(), Tile<StaticRefiner>());
             foreach (int LA in BagDropLeviAndAnahita)
