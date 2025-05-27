@@ -18,13 +18,13 @@ namespace CalamitySoulPorted.ItemsPorted
 
             var usPlayer = player.Soul();
             //林海与炼金狂人射弹。
-            if (usPlayer.SilvaEnch && item.CountClassAs<MagicDamageClass>())
+            if (usPlayer.EnchSilva && item.CountClassAs<MagicDamageClass>())
             {
                 for (int i = 0; i < 3; i++)
                 EnchSilvaFlasks(source, damage, player);
             }
             //皇天效果：强制潜伏攻击。
-            if (usPlayer.EmpyreanEnch && item.CountClassAs<RogueDamageClass>() && !player.CheckStealth())
+            if (usPlayer.EnchEmpyrean && item.CountClassAs<RogueDamageClass>() && !player.CheckStealth())
             {
                 int forceDamage = (int)(damage * 0.25f);
                 int p = Projectile.NewProjectile(source, position, velocity, type, forceDamage, knockback, player.whoAmI);

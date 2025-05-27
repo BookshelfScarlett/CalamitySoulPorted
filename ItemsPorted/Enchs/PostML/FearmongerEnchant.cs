@@ -14,6 +14,6 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
             Item.rare = ModContent.RarityType<EnchPostML>();
             base.SetDefaults();
         }
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().FearmongerEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchFearmonger = true;
     }
 }

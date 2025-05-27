@@ -1,0 +1,24 @@
+SoulPrestigeMelee: {
+	DisplayName: Soul Prestige Melee
+	Tooltip: ""
+}
+
+SoulPrestigeMagic: {
+	DisplayName: Soul Prestige Magic
+	Tooltip: ""
+}
+
+SoulPrestigeRanged: {
+	DisplayName: Soul Prestige Ranged
+	Tooltip: ""
+}
+
+SoulPrestigeRogue: {
+	DisplayName: Soul Prestige Rogue
+	Tooltip: ""
+}
+
+SoulPrestigeSummon: {
+	DisplayName: Soul Prestige Summon
+	Tooltip: ""
+}

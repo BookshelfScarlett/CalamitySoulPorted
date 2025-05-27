@@ -1,3 +1,5 @@
+using System;
+using System.Security;
 using CalamityMod.Items.Armor.Aerospec;
 using CalamityMod.Items.Armor.Auric;
 using CalamityMod.Items.Armor.Bloodflare;
@@ -9,7 +11,10 @@ using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Items.Armor.Statigel;
 using CalamityMod.Items.Armor.Tarragon;
 using CalamityMod.Items.Armor.Victide;
+using CalamityMod.Items.Weapons.Melee;
+using CalamitySoulPorted.ItemNew.Weapons.MeleeWeapon;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -28,6 +33,12 @@ namespace CalamitySoulPorted.SoulMethods
         public static RecipeGroup SilvaHead;
         public static RecipeGroup TarragonHead;
         public static RecipeGroup BloodflareHead;
+        public static RecipeGroup ElementalLance;
+        #region CrossMod
+        public static RecipeGroup TerraBlade;
+        public static RecipeGroup ElementalShiv;
+        public static RecipeGroup StellarContempt;
+        #endregion
         public override void Unload()
         {
             RecipeGroup[] Train =
@@ -42,7 +53,13 @@ namespace CalamitySoulPorted.SoulMethods
                 AuricTeslaHead,
                 SilvaHead,
                 TarragonHead,
-                BloodflareHead
+                BloodflareHead,
+
+                ElementalLance,
+
+                ElementalShiv,
+                TerraBlade,
+                StellarContempt
             ];
             for (int i = 0; i < Train.Length; i++)
                 Train[i] = null;
@@ -61,6 +78,7 @@ namespace CalamitySoulPorted.SoulMethods
             SilvaHead           = InstallGroupMod<SilvaHeadMagic>       (Item<SilvaHeadMagic>(),        Item<SilvaHeadSummon>());
             GodSlayerHead       = InstallGroupMod<GodSlayerHeadMelee>   (Item<GodSlayerHeadMelee>(),    Item<GodSlayerHeadRanged>(),        Item<GodSlayerHeadRogue>());
             AuricTeslaHead      = InstallGroupMod<AuricTeslaRoyalHelm>  (Item<AuricTeslaRoyalHelm>(),   Item<AuricTeslaHoodedFacemask>(),   Item<AuricTeslaWireHemmedVisage>(), Item<AuricTeslaSpaceHelmet>(),  Item<AuricTeslaPlumedHelm>());
+
             #endregion
 
             #region 注册名字
@@ -75,23 +93,56 @@ namespace CalamitySoulPorted.SoulMethods
             SilvaHead.          NameHelperGroup("SilvaHead");
             GodSlayerHead.      NameHelperGroup("GodSlayerHead");
             AuricTeslaHead.     NameHelperGroup("AuricTeslaHead");
+
+            #endregion
+            
+            #region 武器相关
+            ElementalLance = InstallGroupMod<ElementalLance>(Item<ElementalSpearReborn>());
+            //注册
+            ElementalLance.NameHelperGroup("ElementalLance");
+            #endregion
+
+            #region 模组联动
+            bool isEnableInheritance = ModLoader.TryGetMod("CalamityInheritance", out Mod inheritance);
+            if (isEnableInheritance)
+                DoInheritanceGroup(inheritance);
+
             #endregion
         }
+
+        public void DoInheritanceGroup(Mod inheritance)
+        {
+            //注册泰拉刃的合成表。这里需要补充一个泰拉边锋
+            TerraBlade = InstallIncludeVanilla(ItemID.TerraBlade, QuickCrossItem(inheritance, "TerraEdge"));
+            ElementalShiv = InstallGroupMod<ElementalShiv>(QuickCrossItem(inheritance, "ElementalShivold"));
+            StellarContempt = InstallGroupMod<StellarContempt>(QuickCrossItem(inheritance, "MeleeTypeHammerStellarContemptLegacy"));
+            //注册名字
+            TerraBlade.NameHelperGroup("TerraBladeCrossMod");
+            ElementalShiv.NameHelperGroup("ElementalShivCrossMod");
+            StellarContempt.NameHelperGroup("StellarContemptCrossMod");
+        }
+
         public static RecipeGroup InstallGroupMod<T>(params int[] setItems) where T : ModItem => new(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<T>())}", setItems);
+        public static RecipeGroup InstallIncludeVanilla(int showedItemID, params int[] setItems) => new(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(showedItemID)}", setItems);
         public static int Item<T>() where T : ModItem => ModContent.ItemType<T>();
+        public static int QuickCrossItem(Mod mod, string wantedItemName) => mod.Find<ModItem>(wantedItemName).Type;
     }
     public class SoulRecpieGroupID
     {
-        public static string VictideHead        => "VictideHead".      GetNameGroup();
-        public static string AerospecHead       => "AerospecHead".       GetNameGroup();
-        public static string StatigelHead       => "StatigelHead".       GetNameGroup();
-        public static string DaedalusHead       => "DaedalusHead".       GetNameGroup();
-        public static string ReaverHead         => "ReaverHead".         GetNameGroup();
-        public static string HydrothermicHead   => "HydrothermicHead".   GetNameGroup();
-        public static string TarragonHead       => "TarragonHead".       GetNameGroup();
-        public static string BloodflareHead     => "BloodflareHead".     GetNameGroup();
-        public static string GodSlayerHead      => "GodSlayerHead".      GetNameGroup();
-        public static string SilvaHead          => "SilvaHead".          GetNameGroup();
-        public static string AuricTeslaHead     => "AuricTeslaHead".     GetNameGroup();
+        public static string VictideHead        => "VictideHead".               GetNameGroup();
+        public static string AerospecHead       => "AerospecHead".              GetNameGroup();
+        public static string StatigelHead       => "StatigelHead".              GetNameGroup();
+        public static string DaedalusHead       => "DaedalusHead".              GetNameGroup();
+        public static string ReaverHead         => "ReaverHead".                GetNameGroup();
+        public static string HydrothermicHead   => "HydrothermicHead".          GetNameGroup();
+        public static string TarragonHead       => "TarragonHead".              GetNameGroup();
+        public static string BloodflareHead     => "BloodflareHead".            GetNameGroup();
+        public static string GodSlayerHead      => "GodSlayerHead".             GetNameGroup();
+        public static string SilvaHead          => "SilvaHead".                 GetNameGroup();
+        public static string AuricTeslaHead     => "AuricTeslaHead".            GetNameGroup();
+        public static string TerraBlade         => "TerraBladeCrossMod".        GetNameGroup();
+        public static string ElementalLance     => "ElementalLance".            GetNameGroup();
+        public static string StellarContempt    => "StellarContemptCrossMod".   GetNameGroup();
+        public static string ElementalShiv      => "ElementalShivCrossMod".     GetNameGroup();
     }
 }

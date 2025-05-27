@@ -5,6 +5,7 @@ using CalamitySoulPorted.RarityCustom;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
@@ -20,7 +21,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.Soul().EmpyreanEnch = true;
+            player.Soul().EnchEmpyrean = true;
         }
         public override void AddRecipes()
         {
@@ -34,6 +35,6 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
                 AddTile(TileID.LunarCraftingStation).
                 Register();
         }
-        
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
     }
 }

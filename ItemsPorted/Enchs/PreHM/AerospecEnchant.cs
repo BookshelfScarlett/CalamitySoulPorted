@@ -15,7 +15,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PreHM
             Item.value = SoulShopValue.EnchPreHardMode;
             Item.rare = ModContent.RarityType<EnchPreHardMode>();
         }
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().AerospecEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchAerospec = true;
         public override void AddRecipes()
         {
             base.AddRecipes();

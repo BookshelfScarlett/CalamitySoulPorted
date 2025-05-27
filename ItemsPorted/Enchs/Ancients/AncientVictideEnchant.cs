@@ -21,6 +21,6 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.Ancients
             Item.rare = ModContent.RarityType<EnchPreHardMode>();
             Item.value = SoulShopValue.EnchPreHardMode;
         }
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().VictideEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchVictide = true;
     }
 }

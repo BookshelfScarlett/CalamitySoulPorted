@@ -15,7 +15,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.HM
         public override string Category => HardMode;
         public override int GiveRare => ModContent.RarityType<EnchHardMode>();
         public override int GiveValue => SoulShopValue.EnchHardMode;
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().PlaguebringerEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchPlaguebringer = true;
         public override void AddRecipes()
         {
             CreateRecipe().

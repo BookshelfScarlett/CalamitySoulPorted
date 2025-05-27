@@ -7,7 +7,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.HM
     public class BrimflameEnchant : GenericEnchant, ILocalizedModType
     {
         public override string Category => HardMode;
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().BrimflameEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchBrimflame = true;
         public override void AddRecipes()
         {
             base.AddRecipes();

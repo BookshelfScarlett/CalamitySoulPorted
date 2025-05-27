@@ -21,7 +21,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
         {
             var usPlayer = player.Soul();
             var calPlayer = player.Calamity();
-            usPlayer.GodSlayerEnch = true;
+            usPlayer.EnchGodSlayer = true;
             if (usPlayer.GodSlayerEnchantDashKeyPressed || player.dashDelay != 0 && calPlayer.LastUsedDashID == GodslayerArmorDash.ID)
             {
                 calPlayer.DeferredDashID = GodslayerArmorDash.ID;

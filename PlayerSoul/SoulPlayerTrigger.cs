@@ -1,6 +1,3 @@
-using System;
-using CalamityMod.Cooldowns;
-using CalamitySoulPorted.ItemsPorted.Enchs.PostML;
 using CalamitySoulPorted.SoulBuildUp;
 using Terraria.GameInput;
 using Terraria.ModLoader;
@@ -29,7 +26,7 @@ namespace CalamitySoulPorted.PlayerSoul
 
         private void GodSlayerEnchantDashTrigger(TriggersSet triggersSet)
         {
-            if (!GodSlayerEnch)
+            if (!EnchGodSlayer)
                 return;
 
             if (SoulKeybind.GodSlayerEnchantDash.JustPressed)

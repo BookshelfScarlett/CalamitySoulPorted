@@ -6,6 +6,8 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Projectiles.Summon;
 using CalamitySoulPorted.BuffsPoted;
+using CalamitySoulPorted.ItemNew.Accessories;
+using CalamitySoulPorted.ItemsPorted.Enchs.HM;
 using CalamitySoulPorted.SoulSounds;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -24,22 +26,31 @@ namespace CalamitySoulPorted.PlayerSoul
             Enchantment();
             EnchantmentBuff();
             EnchCounters();
+            AccessoriesBuff();
             CustomSpeedUpdate();
 
+        }
+
+        public void AccessoriesBuff()
+        {
+            if (GuarrantedPrestige)
+            {
+                
+            }
         }
 
         private void EnchantmentBuff()
         {
             //日影魔石 + 10%攻速
             if (EnchUmbraphileBuff)
-                Player.GetAttackSpeed<GenericDamageClass>() += 0.10f;
+                Player.GetAttackSpeed<GenericDamageClass>() += UmbraphileEnchant.EnchUmbraphileAttackSpeedBouns;
         }
 
         public void Enchantment()
         {
             var calPlayer = Player.Calamity();
             //钨钢
-            if (WulfrumEnch)
+            if (EnchWulfrum)
             {
                 int droneBuff = ModContent.BuffType<WulfrumDroidBuff>();
                 //给生命恢复与1栏位
@@ -61,7 +72,7 @@ namespace CalamitySoulPorted.PlayerSoul
                 
             }
             //雪境
-            if (SnowruffianEnch)
+            if (EnchSnowruffian)
             {
                 //空中移速
                 if (Player.velocity.Y != 0)
@@ -101,7 +112,7 @@ namespace CalamitySoulPorted.PlayerSoul
                 IsUsedEnchSilvaReborn = false;
             }
             //林海强起
-            if (SilvaEnch && EnchSilvaForceHealCounter > 0)
+            if (EnchSilva && EnchSilvaForceHealCounter > 0)
             {
                 EnchSilvaForceHealCounter--;
                 if (Player.statLife < Player.statLifeMax2 - 50)
@@ -111,18 +122,7 @@ namespace CalamitySoulPorted.PlayerSoul
                 }
             }
             #endregion
-            //日影魔石
-            if (Player.ItemUsesThisAnimation < 1 && UmbraphileEnch && EnchUmbNotHoldingWeaponCounter < EnchUmbNotHoldingWeaponDuration)
-            {
-                EnchUmbNotHoldingWeaponCounter++;
-                if (EnchUmbNotHoldingWeaponCounter == EnchUmbNotHoldingWeaponDuration)
-                {
-                    //这里需要一个tint
-                    SoundEngine.PlaySound(SoulSoundID.SoundFallenStar, Player.Center);
-                    Player.AddBuff(ModContent.BuffType<EnchUmbraphileBuff>(), 6000);
-                }
-            }
-            if (UmbraphileEnch)
+            if (EnchUmbraphile)
             {
                 //蓄能大于10秒即可
                 if (EnchUmbNotHoldingWeaponCounter >= EnchUmbNotHoldingWeaponDuration)
@@ -145,7 +145,6 @@ namespace CalamitySoulPorted.PlayerSoul
                     Player.AddBuff(ModContent.BuffType<EnchUmbraphileBuff>(), 2);
                 }
             }
-            if (EmpyreanEnch)
             
         }
 

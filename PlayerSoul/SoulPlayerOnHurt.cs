@@ -24,7 +24,7 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             var calPlayer = Player.Calamity();
             //远古弑神魔石强起
-            if (AncientGodSlayerEnch && !Player.HasCooldown(AncientGodSlayerCooldown.ID))
+            if (EnchAncientGodSlayer && !Player.HasCooldown(AncientGodSlayerCooldown.ID))
             {
                 SoundEngine.PlaySound(SoulSoundID.SoundRainbowGun, Player.Center);
                 //粒子
@@ -40,7 +40,7 @@ namespace CalamitySoulPorted.PlayerSoul
             //林海魔石强起
             //两个boolen ; 1 玩家仅佩戴林海魂石，不包括弑神魂石
             //2玩家佩戴弑神魂石与林海魂石
-            if ((SilvaEnch && !AncientGodSlayerEnch && EnchSilvaRebornCounter > 0) || (SilvaEnch && AncientGodSlayerEnch && EnchSilvaRebornCounter > 0 && Player.HasCooldown(AncientGodSlayerCooldown.ID)))
+            if ((EnchSilva && !EnchAncientGodSlayer && EnchSilvaRebornCounter > 0) || (EnchSilva && EnchAncientGodSlayer && EnchSilvaRebornCounter > 0 && Player.HasCooldown(AncientGodSlayerCooldown.ID)))
             {
                 //给予一次
                 if (EnchSilvaRebornCounter == EnchSilvaRebornDuration)
@@ -87,11 +87,17 @@ namespace CalamitySoulPorted.PlayerSoul
         public override bool FreeDodge(Player.HurtInfo info)
         {
             //日影魔石满充能后给予一个闪避
-            if (UmbraphileEnch && EnchUmbNotHoldingWeaponCounter == -1)
+            if (EnchUmbraphile && EnchUmbNotHoldingWeaponCounter == -1)
             {
                 //粒子。
                 SendDodgeDust();
                 EnchUmbNotHoldingWeaponCounter = 0;
+                return true;
+            }
+            //远古弑神自起成功后给予一个无时限的闪避
+            if (EnchAncientGodSlayer && Player.HasCooldown(AncientGodSlayerCooldown.ID) && EnchAncientGodSlayerRebornDodge)
+            {
+                EnchAncientGodSlayerRebornDodge = false;
                 return true;
             }
             return false;
@@ -129,19 +135,50 @@ namespace CalamitySoulPorted.PlayerSoul
         }
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
-            GodSlayerEnchDR(ref modifiers);
+            GodSlayerEnchDR();
+            EmpyreanEnchDR();
+            //直接乘以这个数
+            modifiers.SourceDamage *= GetDirectlyDR;
+            GetDirectlyDR = 1f;
         }
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
-            GodSlayerEnchDR(ref modifiers);
+            GodSlayerEnchDR();
+            EmpyreanEnchDR();
+            //直接乘以这个数
+            modifiers.SourceDamage *= GetDirectlyDR;
+            //计算完之后记得重置免伤数据
+            GetDirectlyDR = 1f;
         }
+        //皇天魔石三次机会
+        public void EmpyreanEnchDR()
+        {
+            //有次数盾且日影模式仍然存在时不启用
+            if (EmpyreanShieldCD == 0 && EnchUmbNotHoldingWeaponCounter == -1)
+                return;
+
+            //承伤时 -1
+            if (EmpyreanShieldTimes == 0)
+            {
+                EmpyreanShieldCD = 120;
+                return;
+            }
+            EmpyreanShieldTimes--;
+            Main.NewText("皇天免伤-1");
+            //20%免伤
+            float actualDR = 1 - 0.2f;
+            GetDirectlyDR *= actualDR;
+        }
+
         //弑神魔石免伤 
-        public void GodSlayerEnchDR(ref Player.HurtModifiers modifiers)
+        public void GodSlayerEnchDR()
         {
             if (GodSlayerEnchDamageReductionCounter <= 0)
                 return;
-            
-            modifiers.SourceDamage *= 0.2f;
+
+            //20%免伤
+            float actualDR = 1 - 0.2f;
+            GetDirectlyDR *= actualDR;
         }
         public override void OnHurt(Player.HurtInfo info)
         {

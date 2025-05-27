@@ -7,6 +7,6 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.HM
     public class TitanHeartEnchant : GenericEnchant, ILocalizedModType
     {
         public override string Category => HardMode;
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().TitanHeartEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchTitanHeart = true;
     }
 }

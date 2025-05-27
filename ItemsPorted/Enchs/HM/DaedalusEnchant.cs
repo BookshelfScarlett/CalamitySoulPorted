@@ -11,7 +11,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.HM
         {
             base.SetDefaults();
         }
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().DaedalusEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchDaedalus = true;
         public override void AddRecipes()
         {
             base.AddRecipes();

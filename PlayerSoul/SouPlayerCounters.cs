@@ -1,5 +1,6 @@
 using CalamityMod;
 using CalamityMod.Cooldowns;
+using CalamitySoulPorted.SoulCooldowns.AncientGodSlayerReborn;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.PlayerSoul
@@ -20,32 +21,44 @@ namespace CalamitySoulPorted.PlayerSoul
         public int EnchUmbNotHoldingWeaponCounter = 0;
         //皇天魔石次数盾
         public int EmpyreanShieldTimes = 3;
-        public int EmpyreanShieldCD = 120;
+        public int EmpyreanShieldCD = 0;
         //弑神魔石冲刺
         public int GodSlayerEnchDashTime = 0;
         //弑神魔石的免伤
         public int GodSlayerEnchDamageReductionCounter = 0;
         //标记是否已经进入最大CD
         public bool PingGodSlayerMaxCD = false;
+        //远古弑神魔石强起后的闪避
+        public bool EnchAncientGodSlayerRebornDodge = true;
         public void EnchCounters()
         {
             //林海强起 
             if (EnchSilvaForceHealCD > 0)
                 EnchSilvaForceHealCD--;
-            
+
             if (EnchUmbBoomCD > 0)
                 EnchUmbBoomCD--;
             //未佩戴的情况下重置为0
-            if (!UmbraphileEnch)
+            if (!EnchUmbraphile)
                 EnchUmbNotHoldingWeaponCounter = 0;
-            
+
             if (GodSlayerEnchDamageReductionCounter > 0)
                 GodSlayerEnchDamageReductionCounter--;
-                
+
             if (!Player.HasCooldown(GodSlayerDash.ID))
             {
                 GodSlayerEnchDashTime = 0;
                 PingGodSlayerMaxCD = false;
+            }
+            //远古弑神魔石强起CD结束后重置这个闪避
+            if (!Player.HasCooldown(AncientGodSlayerCooldown.ID))
+                EnchAncientGodSlayerRebornDodge = true;
+            
+            if (EnchEmpyrean && EmpyreanShieldCD > 0)
+            {
+                EmpyreanShieldCD--;
+                if (EmpyreanShieldCD == 0)
+                    EmpyreanShieldTimes = 3;
             }
         }
     }

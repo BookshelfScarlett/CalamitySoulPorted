@@ -1,0 +1,8 @@
+BlissfulBombardierReborn: {
+	DisplayName: 极乐圣天炮-R
+	Tooltip:
+		'''
+		发射圣火火箭，在飞行过程中会滞留伤害性的粉尘
+		圣火火箭在发射到一定距离时将会停止，而后以极高的速度锁定最近的敌人
+		'''
+}

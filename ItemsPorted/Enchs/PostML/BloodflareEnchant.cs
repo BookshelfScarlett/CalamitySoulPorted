@@ -15,7 +15,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
             base.SetDefaults();
         }
         
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().BloodflareEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchBloodflare = true;
         public override void AddRecipes()
         {
             base.AddRecipes();

@@ -8,7 +8,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.HM
     public class HydrothermicEnchant : GenericEnchant, ILocalizedModType
     {
         public override string Category => HardMode;
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().HydrothermicEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchHydrothermic = true;
     }
 
 }

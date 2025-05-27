@@ -14,7 +14,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
             Item.value = SoulShopValue.EnchPostML;
             Item.rare = ModContent.RarityType<EnchPostML>();
         }
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().TarragonEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchTarragon = true;
         public override void AddRecipes()
         {
             base.AddRecipes();

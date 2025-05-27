@@ -8,6 +8,19 @@ namespace CalamitySoulPorted.SoulProjectiles
 {
     public class SoulGlobalProjectiles : GlobalProjectile
     {
+        #region Category
+        public static string MeleePath => "Projectiles.MeleeProj";
+        public static string RangedPath => "Projectiles.RangedProj";
+        public static string MagicPath => "Projectiles.MagicProj";
+        public static string SummonPath => "Projectiles.SummonProj";
+        public static string RoguePath => "Projectiles.RogueProj";
+        public static string TypelessPath => "Projectiles.TypelessProj";
+        #endregion
+        #region Generic Projectile Path
+        public static string ProjRoute => "CalamitySoulPorted/SoulProjectiles";
+        public static string InvisProj => $"{ProjRoute}/InvisibleProj";
+        #endregion
+        public int StoreEU = -1;
         public bool IsUsedForceStealth = false;
         public override bool InstancePerEntity => true;
         public override void AI(Projectile projectile)

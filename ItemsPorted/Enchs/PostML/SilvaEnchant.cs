@@ -31,7 +31,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             //启用魂石效果
-            player.Soul().SilvaEnch = true;
+            player.Soul().EnchSilva = true;
             player.noFallDmg = true;
             //Wing's Effect
             if (player.controlJump && player.wingTime > 0f && player.jump == 0 && player.velocity.Y != 0f && !hideVisual)

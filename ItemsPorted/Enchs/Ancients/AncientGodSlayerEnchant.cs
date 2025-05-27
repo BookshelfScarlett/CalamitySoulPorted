@@ -16,7 +16,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.Ancients
         public override string Category => PostML;
         public override int GiveValue => SoulShopValue.EnchPostML;
         public override int GiveRare => ModContent.RarityType<EnchPostML>();
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().AncientGodSlayerEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchAncientGodSlayer = true;
         public override void AddRecipes()
         {
             CreateRecipe().

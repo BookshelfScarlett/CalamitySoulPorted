@@ -6,11 +6,16 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs
 {
     public abstract class GenericEnchant : ModItem
     {
+        #region Category
         public static string PreHardMode => "PreHardMode"; 
         public static string HardMode => "HardMode";
         public static string PostML => "PostML";
         public virtual string Category{get;}
+        #endregion
+        #region Localization Suager
         public new string LocalizationCategory => "Items.Enchs" + "." + Category;
+        
+        #endregion
         public virtual int GiveValue => 100;
         public virtual int GiveRare => ItemRarityID.Green;
         public override void SetStaticDefaults()

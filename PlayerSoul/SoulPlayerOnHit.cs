@@ -14,15 +14,14 @@ namespace CalamitySoulPorted.PlayerSoul
     {
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            SnowRuffianEffect(target);
-            SilvaEffect(target, hit);
+            EffectSnowRuffian(target);
+            EffectSilva(target, hit);
         }
 
-        public void UmbraphileEffect(NPC target, Projectile proj)
+        public void EffectUmbraphile(NPC target, Projectile proj)
         {
-            if (!UmbraphileEnch)
+            if (!EnchUmbraphile)
                 return;
-            
             
             //日影魔石: 潜伏命中的日影爆炸
             if (proj.CountClassAs<RogueDamageClass>() && EnchUmbBoomCD < 1)
@@ -40,23 +39,31 @@ namespace CalamitySoulPorted.PlayerSoul
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            SnowRuffianEffect(target);
-            SilvaEffect(target, hit);
-            UmbraphileEffect(target, proj);
+            EffectSnowRuffian(target);
+            EffectSilva(target, hit);
+            EffectUmbraphile(target, proj);
+            
         }
 
-        private void SnowRuffianEffect(NPC target)
+        public void EffectEmpyrean(NPC target, Projectile proj)
         {
-            if (!WulfrumEnch)
+            if (!EnchEmpyrean)
+                return;
+            
+        }
+
+        public void EffectSnowRuffian(NPC target)
+        {
+            if (!EnchWulfrum)
                 return;
             //并非为boss
             if (Main.rand.NextBool(5) && !target.CheckBoss())
                 target.velocity *= 0f;
         }
         //林海
-        public void SilvaEffect(NPC target, NPC.HitInfo hit)
+        public void EffectSilva(NPC target, NPC.HitInfo hit)
         {
-            if (!SilvaEnch)
+            if (!EnchSilva)
                 return;
             //暴击、魔法伤害，符合条件，触发林海强起
             if (hit.CountClassAs<MagicDamageClass>() && hit.Crit)

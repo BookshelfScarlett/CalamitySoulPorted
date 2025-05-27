@@ -4,6 +4,7 @@ using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.SlimeGod;
 using CalamitySoulPorted.ItemsPorted;
 using CalamitySoulPorted.PlayerSoul;
+using CalamitySoulPorted.SoulProjectiles;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.ID;
@@ -13,10 +14,11 @@ using Terraria.ModLoader.Config;
 
 namespace CalamitySoulPorted.SoulMethods
 {
-    public static class SoulMethod
+    public static partial class SoulMethod
     {
         public static SoulPlayer Soul(this Player player) => player.GetModPlayer<SoulPlayer>();
         public static SoulGlobalItem Soul(this Item item) => item.GetGlobalItem<SoulGlobalItem>();
+        public static SoulGlobalProjectiles Soul(this Projectile proj) => proj.GetGlobalProjectile<SoulGlobalProjectiles>();
         //用于查看NPC类型
         public static bool CheckSame<T>(this NPC wanted) where T : ModNPC => wanted.type == ModContent.NPCType<T>();
         //注册合成组名字

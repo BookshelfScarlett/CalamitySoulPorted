@@ -7,6 +7,6 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.HM
     public class SulphurousEnchant : GenericEnchant, ILocalizedModType
     {
         public override string Category => HardMode;
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().SulphurousEnch = true;
+        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchSulphurous = true;
     }
 }
