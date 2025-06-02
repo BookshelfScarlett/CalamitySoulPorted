@@ -1,13 +1,18 @@
+using System.Collections.Generic;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Ranged;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
 {
     public class SoulPrestigeMagic : GenericPrestige
     {
+        public const int ManaCount = 150;
+        public const int ManaCost = 20;
+        public static readonly int AttackSpeed = 15;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -16,13 +21,18 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         {
             base.SetDefaults();
         }
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(QuickCrtis, ManaCost, ManaCount, AttackSpeed);
         public override void ExtraUpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage<MagicDamageClass>() += QuickDamage;
             player.GetCritChance<MagicDamageClass>() += QuickCrtis;
-            player.statManaMax2 += 150;
-            player.manaCost -= 0.20f;
-            player.GetAttackSpeed<MagicDamageClass>() += 0.15f;
+            player.statManaMax2 += ManaCount;
+            player.manaCost -= ManaCost / 100f;
+            player.GetAttackSpeed<MagicDamageClass>() += AttackSpeed / 100f;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
         }
         public override void AddRecipes()
         {

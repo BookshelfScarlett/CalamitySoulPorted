@@ -1,4 +1,5 @@
 using System;
+using CalamityMod.Items.Weapons.Magic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,9 +17,9 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             if (!proj.CountsAsClass<SummonDamageClass>())
                 return;
-
+            if (Player.HeldItem.type == ModContent.ItemType<Sylvestaff>())
             if (Main.rand.NextBool(GetSummonCrits))
-                modifiers.SourceDamage *= 2;
+                modifiers.SetCrit();
         }
     }
 }

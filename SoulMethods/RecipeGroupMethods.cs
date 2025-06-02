@@ -11,7 +11,9 @@ using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Items.Armor.Statigel;
 using CalamityMod.Items.Armor.Tarragon;
 using CalamityMod.Items.Armor.Victide;
+using CalamityMod.Items.Placeables.Furniture.Trophies;
 using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
 using CalamitySoulPorted.ItemNew.Weapons.MeleeWeapon;
 using Terraria;
 using Terraria.ID;
@@ -34,6 +36,8 @@ namespace CalamitySoulPorted.SoulMethods
         public static RecipeGroup TarragonHead;
         public static RecipeGroup BloodflareHead;
         public static RecipeGroup ElementalLance;
+        public static RecipeGroup TrophyLA;
+        public static RecipeGroup TrophyExoTwin;
         #region CrossMod
         public static RecipeGroup TerraBlade;
         public static RecipeGroup ElementalShiv;
@@ -54,6 +58,9 @@ namespace CalamitySoulPorted.SoulMethods
                 SilvaHead,
                 TarragonHead,
                 BloodflareHead,
+
+                TrophyLA,
+                TrophyExoTwin,
 
                 ElementalLance,
 
@@ -78,6 +85,8 @@ namespace CalamitySoulPorted.SoulMethods
             SilvaHead           = InstallGroupMod<SilvaHeadMagic>       (Item<SilvaHeadMagic>(),        Item<SilvaHeadSummon>());
             GodSlayerHead       = InstallGroupMod<GodSlayerHeadMelee>   (Item<GodSlayerHeadMelee>(),    Item<GodSlayerHeadRanged>(),        Item<GodSlayerHeadRogue>());
             AuricTeslaHead      = InstallGroupMod<AuricTeslaRoyalHelm>  (Item<AuricTeslaRoyalHelm>(),   Item<AuricTeslaHoodedFacemask>(),   Item<AuricTeslaWireHemmedVisage>(), Item<AuricTeslaSpaceHelmet>(),  Item<AuricTeslaPlumedHelm>());
+            TrophyLA            = InstallGroupMod<LeviathanTrophy>      (Item<AnahitaTrophy>());
+            TrophyExoTwin       = InstallGroupMod<ApolloTrophy>         (Item<ArtemisTrophy>());
 
             #endregion
 
@@ -94,8 +103,10 @@ namespace CalamitySoulPorted.SoulMethods
             GodSlayerHead.      NameHelperGroup("GodSlayerHead");
             AuricTeslaHead.     NameHelperGroup("AuricTeslaHead");
 
+            TrophyLA.           NameHelperGroup("TrophyLA");
+            TrophyExoTwin.      NameHelperGroup("TrophyExoTwin");
             #endregion
-            
+
             #region 武器相关
             ElementalLance = InstallGroupMod<ElementalLance>(Item<ElementalSpearReborn>());
             //注册
@@ -144,5 +155,7 @@ namespace CalamitySoulPorted.SoulMethods
         public static string ElementalLance     => "ElementalLance".            GetNameGroup();
         public static string StellarContempt    => "StellarContemptCrossMod".   GetNameGroup();
         public static string ElementalShiv      => "ElementalShivCrossMod".     GetNameGroup();
+        public static string TrophyLA           => "TrophyLA".                  GetNameGroup();
+        public static string TrophyExoTwin      => "TrophyExoTwin".             GetNameGroup();
     }
 }

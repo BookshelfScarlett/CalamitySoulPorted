@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using CalamityMod.Items.Pets;
 using CalamityMod.Items.TreasureBags;
+using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.NPCs.AquaticScourge;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.AstrumDeus;
@@ -35,6 +38,7 @@ namespace CalamitySoulPorted.ItemsPorted
     public class MethodsSingleItemRecipeHelper : ModSystem
     {
         #region 建表
+        #region 宝藏袋
         public static List<int> BagDropDesertScourge = [];
         public static List<int> BagDropCrabulon = [];
         public static List<int> BagDropHiveMind = [];
@@ -58,65 +62,98 @@ namespace CalamitySoulPorted.ItemsPorted
         public static List<int> BagDropOldDuke = [];
         public static List<int> BagDropDevourerofGods = [];
         public static List<int> BagDropYharon = [];
+        public static List<int> BagDropInhertianceYharon = [];
+        #endregion
+        #region 纪念章
+        public static List<int> TrophyDesertScourge = [];
+        public static List<int> TrophyCrabulon = [];
+        public static List<int> TrophyHiveMind = [];
+        public static List<int> TrophyPerf = [];
+        public static List<int> TrophySG = [];
+        public static List<int> TrophyAquaticScourge = [];
+        public static List<int> TrophyCryogen = [];
+        public static List<int> TrophyBrimstoneElemental = [];
+        public static List<int> TrophyCalamitasClone = [];
+        //兄弟纪念章
+        public static List<int> TrophyCatastropheClone = [];
+        public static List<int> TrophyCatalycsmClone = [];
+        #endregion
         public override void Load()
         {
-
-            BagDropDesertScourge = [];
-            BagDropCrabulon = [];
-            BagDropHiveMind = [];
-            BagDropPerf = [];
-            BagDropSlimeGod = [];
-            BagDropCryogen = [];
-            BagDropAquaticScourge = [];
-            BagDropBrimstoneElemental = [];
-            BagDropCalamitasClone = [];
-            BagDropLeviAndAnahita = [];
-            BagDropAstrum = [];
-            BagDropPlagueBringer = [];
-            BagDropRavager = [];
-            BagDropDeus = [];
-            BagDropProvidence = [];
-            BagDropDragonfolly = [];
-            BagDropSignus = [];
-            BagDropCeaselessVoid = [];
-            BagDropStormWeaver = [];
-            BagDropPolterghast = [];
-            BagDropOldDuke = [];
-            BagDropDevourerofGods = [];
-            BagDropYharon = [];
+            List<int>[] bagList =
+            [
+                BagDropDesertScourge,
+                BagDropCrabulon,
+                BagDropHiveMind,
+                BagDropPerf,
+                BagDropSlimeGod,
+                BagDropCryogen,
+                BagDropAquaticScourge,
+                BagDropBrimstoneElemental,
+                BagDropCalamitasClone,
+                BagDropLeviAndAnahita,
+                BagDropAstrum,
+                BagDropPlagueBringer,
+                BagDropRavager,
+                BagDropDeus,
+                BagDropProvidence,
+                BagDropDragonfolly,
+                BagDropSignus,
+                BagDropCeaselessVoid,
+                BagDropStormWeaver,
+                BagDropPolterghast,
+                BagDropOldDuke,
+                BagDropDevourerofGods,
+                BagDropYharon,
+                BagDropInhertianceYharon
+            ];
+            for (int i = 0; i < bagList.Length; i++)
+                bagList[i] = [];
         }
         public override void Unload()
         {
-            BagDropDesertScourge = null;
-            BagDropCrabulon = null;
-            BagDropHiveMind = null;
-            BagDropPerf = null;
-            BagDropSlimeGod = null;
-            BagDropCryogen = null;
-            BagDropAquaticScourge = null;
-            BagDropBrimstoneElemental = null;
-            BagDropCalamitasClone = null;
-            BagDropLeviAndAnahita = null;
-            BagDropAstrum = null;
-            BagDropPlagueBringer = null;
-            BagDropRavager = null;
-            BagDropDeus = null;
-            BagDropProvidence = null;
-            BagDropDragonfolly = null;
-            BagDropSignus = null;
-            BagDropCeaselessVoid = null;
-            BagDropStormWeaver = null;
-            BagDropPolterghast = null;
-            BagDropOldDuke = null;
-            BagDropDevourerofGods = null;
-            BagDropYharon = null;
-
+            List<int>[] bagList =
+            [
+                BagDropDesertScourge,
+                BagDropCrabulon,
+                BagDropHiveMind,
+                BagDropPerf,
+                BagDropSlimeGod,
+                BagDropCryogen,
+                BagDropAquaticScourge,
+                BagDropBrimstoneElemental,
+                BagDropCalamitasClone,
+                BagDropLeviAndAnahita,
+                BagDropAstrum,
+                BagDropPlagueBringer,
+                BagDropRavager,
+                BagDropDeus,
+                BagDropProvidence,
+                BagDropDragonfolly,
+                BagDropSignus,
+                BagDropCeaselessVoid,
+                BagDropStormWeaver,
+                BagDropPolterghast,
+                BagDropOldDuke,
+                BagDropDevourerofGods,
+                BagDropYharon,
+                BagDropInhertianceYharon
+            ];
+            for (int i = 0; i < bagList.Length; i++)
+                bagList[i] = null;
         }
         #endregion
-        public override void PostAddRecipes()
+        public override void AddRecipes()
         {
             //宝藏袋合成表
             TreasureBagRecipe();
+            //纪念章
+            TrophyRecipe();
+        }
+
+        public void TrophyRecipe()
+        {
+            QuickRecipeGroup<TheAtomSplitter>(SoulRecpieGroupID.TrophyExoTwin, wantedTile: Tile<DraedonsForge>());
         }
 
         public static void TreasureBagRecipe()
@@ -199,14 +236,47 @@ namespace CalamitySoulPorted.ItemsPorted
                 QuickRecipeSingle(DoG, Item<DevourerofGodsBag>(), Tile<CosmicAnvil>());
             foreach (int Dragon in BagDropYharon)
                 QuickRecipeSingle(Dragon, Item<YharonBag>(), Tile<CosmicAnvil>());
-            
+
             #endregion
+            //模组联动
+            CrossModSupport();
+            
         }
+        #region 宝藏袋合成表的模组联动
+        //TODO: 灾劫、狩猎
+        public static void CrossModSupport()
+        {
+            Mod inhertianceMod = SoulMethod.CrossMod("CalamityInheritance");
+            Mod catalystMod = SoulMethod.CrossMod("Catalyst");
+            Mod goozmaMod = SoulMethod.CrossMod("CalamityHunt");
+
+            if (inhertianceMod != null)
+                InheritanceCrossModSupport(inhertianceMod);
+        }
+
+        public static void InheritanceCrossModSupport(Mod inhertianceMod)
+        {
+            ModItem getYharonTreasureBag = inhertianceMod.QuickCrossModItem("YharonTreasureBagLegacy");
+            // ModNPC yharonLegacy = inhertianceMod.QuickCrossModNPC("YharonLegacy");
+            //虽然这个大哥99%不会出现问题，但是我还是决定……just in case了
+            if (getYharonTreasureBag == null)
+                return;
+            QuickRecipeSingle(ItemID.SoulofNight, getYharonTreasureBag.Type);
+
+            // QuickBagListID(BagDropInhertianceYharon, yharonLegacy.NPC.type);
+
+            // foreach (int DragonLegacy in BagDropInhertianceYharon)
+            //     QuickRecipeSingle(DragonLegacy, getYharonTreasureBag.Item.type, Tile<CosmicAnvil>());
+        }
+        #endregion
+        #region 快捷方法
         public static void QuickBagList<T>(List<int> list) where T : ModNPC => list.AddRange(SoulMethod.GetBossDrop(Boss<T>()).Where(id => !list.Contains(id)).Distinct());
+        public static void QuickBagListID(List<int> list, int npcID) => list.AddRange(SoulMethod.GetBossDrop(npcID).Where(id => !list.Contains(id)).Distinct());
         public static int Item<T>() where T : ModItem => ModContent.ItemType<T>();
         public static int Boss<T>() where T : ModNPC => ModContent.NPCType<T>();
         public static int Tile<T>() where T : ModTile => ModContent.TileType<T>();
-
+        #endregion
+        #region 快捷注册物品合成表
         public static Recipe QuickRecipeSingle(int result, int ingre, int wantedTile = TileID.Solidifier, int resultCount = 1, int ingreCounts = 1) =>
             RegisterRecipe(result, ingre, resultCount, wantedTile, ingreCounts);
         public static Recipe QuickRecipeSingleMod<ResultItem>(int ingre, int wantedTile = TileID.Solidifier, int resultCount = 1, int ingrecounts = 1) where ResultItem : ModItem =>
@@ -215,13 +285,19 @@ namespace CalamitySoulPorted.ItemsPorted
         public static Recipe QuickRecipeGroup<ResultItem>(string bannerGroup, int resultCount = 1, int wantedTile = TileID.Solidifier, int bannerCounts = 1) where ResultItem : ModItem =>
             Recipe.Create(ModContent.ItemType<ResultItem>(), resultCount).
                 AddRecipeGroup(bannerGroup, bannerCounts).
+                DisableDecraft().
                 AddTile(wantedTile).
                 Register();
         public static Recipe RegisterRecipe(int result, int ingre, int resultCount, int wantedTile, int ingreCounts) =>
             Recipe.Create(result, resultCount).
                 AddIngredient(ingre, ingreCounts).
+                DisableDecraft().
                 AddTile(wantedTile).
                 Register();
+        #endregion
+        #region CrossMod方法
+        
+        #endregion
     }
    
 }

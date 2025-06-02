@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using CalamityMod;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.SlimeGod;
@@ -77,6 +78,30 @@ namespace CalamitySoulPorted.SoulMethods
         }
         public static LocalizedText GetText(string value) => Language.GetOrRegister("Mods.CalamitySoulPorted.Cooldowns" + "." +  value);
         public static string CDPathValue(string wantedCooldowned) => "CalamitySoulPorted/SoulCooldowns" + "/" + wantedCooldowned;
+        public static Mod CrossMod(string wantedMod)
+        {
+            if (ModLoader.TryGetMod(wantedMod, out Mod mod))
+                return mod;
+            else return null;
+        }
+        /// <summary>
+        /// 用于检索被弱联动的模组物品
+        /// </summary>
+        public static ModItem QuickCrossModItem(this Mod mod, string wantedItemName)
+        {
+            if (mod.TryFind(wantedItemName, out ModItem itemID))
+                return itemID;
+            else return null;
+        }
+        /// <summary>
+        /// 用于检索被弱联动的模组NPCID
+        /// </summary>
+        public static ModNPC QuickCrossModNPC(this Mod mod, string wantedNPCName)
+        {
+            if (mod.TryFind(wantedNPCName, out ModNPC npcID))
+                return npcID;
+            else return null;
+        }
     }
 
 }

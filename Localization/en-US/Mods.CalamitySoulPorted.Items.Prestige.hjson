@@ -1,24 +1,53 @@
 SoulPrestigeMelee: {
 	DisplayName: Soul Prestige Melee
-	Tooltip: ""
+	Tooltip:
+		'''
+		{CommonItemTooltip.PercentIncreasedMeleeDamageCritChance}
+		{CommonItemTooltip.PercentIncreasedMeleeSpeed@1}
+		'''
 }
 
 SoulPrestigeMagic: {
 	DisplayName: Soul Prestige Magic
-	Tooltip: ""
+	Tooltip:
+		'''
+		{CommonItemTooltip.PercentIncreasedMagicDamageCritChance}
+		{CommonItemTooltip.PercentReducedManaCost@1}
+		{CommonItemTooltip.IncreasesMaxManaBy@2}
+		Increases magic attack speed by {3}%
+		'''
 }
 
 SoulPrestigeRanged: {
 	DisplayName: Soul Prestige Ranged
-	Tooltip: ""
+	Tooltip:
+		'''
+		{CommonItemTooltip.PercentIncreasedRangedDamageCritChance}
+		Increases ranged attack speed by {1}%
+		'''
 }
 
 SoulPrestigeRogue: {
 	DisplayName: Soul Prestige Rogue
-	Tooltip: ""
+	Tooltip:
+		'''
+		+ {0} max stealth
+		Increases rogue damage and critical strike chance by {1}%
+		Increases rogue velocity by {2}%
+		'''
 }
 
 SoulPrestigeSummon: {
 	DisplayName: Soul Prestige Summon
-	Tooltip: ""
+	Tooltip:
+		'''
+		{CommonItemTooltip.PercentIncreasedSummonDamageBy}
+		{CommonItemTooltip.IncreasesMaxMinionsBy@1}
+		{CommonItemTooltip.IncreasesMaxSentriesBy@2}
+		Your minions has {3}% chance to crit
+		{CommonItemTooltip.IncreasesWhipRangeByPercent@4}
+
+		'''
 }
+
+GenericTooltip:""

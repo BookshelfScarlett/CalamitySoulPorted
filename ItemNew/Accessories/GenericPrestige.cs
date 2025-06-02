@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.ItemNew.Accessories
@@ -8,6 +10,7 @@ namespace CalamitySoulPorted.ItemNew.Accessories
     public abstract class GenericPrestige : ModItem
     {
         public override string LocalizationCategory => "Items.Prestige";
+        public string GeneralTooltipHelper => "Mods.CalamitySoulPorted.Items.Prestige.GenericTooltip";
         public const float QuickDamage = 0.30f;
         public const int QuickCrtis = 30;
         public override void SetStaticDefaults()
@@ -28,7 +31,16 @@ namespace CalamitySoulPorted.ItemNew.Accessories
             player.Soul().GuarrantedPrestige = true;
             ExtraUpdateAccessory(player, hideVisual);
         }
-        
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            string key = Language.GetTextValue($"{GeneralTooltipHelper}");
+            tooltips.Add(new TooltipLine(Mod, "Generic", key));
+            ExtraToolTip(tooltips);
+        }
+        public virtual void ExtraToolTip(List<TooltipLine> tooltips)
+        {
+
+        }
         public virtual void ExtraUpdateAccessory(Player player, bool hideVisual)
         {
 
