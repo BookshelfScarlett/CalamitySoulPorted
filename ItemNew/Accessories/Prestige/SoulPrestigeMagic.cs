@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.Items.Weapons.Ranged;
 using Terraria;
@@ -11,21 +12,26 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
     public class SoulPrestigeMagic : GenericPrestige
     {
         public const int ManaCount = 150;
-        public const int ManaCost = 20;
-        public static readonly int AttackSpeed = 15;
+        public const int ManaCost = 15;
+        public static readonly int AttackSpeed = 10;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
         }
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            Item.width = 48;
+            Item.height = 42;
+            Item.rare = RarityPrestigeI;
+            Item.defense = DefensePrestigeI;
+            Item.value = ValuePrestigeI;
+            Item.accessory = true;
         }
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(QuickCrtis, ManaCost, ManaCount, AttackSpeed);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(PrestigeIDamage * 100, PrestigeICrits, ManaCost, ManaCount, AttackSpeed);
         public override void ExtraUpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage<MagicDamageClass>() += QuickDamage;
-            player.GetCritChance<MagicDamageClass>() += QuickCrtis;
+            player.GetDamage<MagicDamageClass>() += PrestigeIDamage;
+            player.GetCritChance<MagicDamageClass>() += PrestigeICrits;
             player.statManaMax2 += ManaCount;
             player.manaCost -= ManaCost / 100f;
             player.GetAttackSpeed<MagicDamageClass>() += AttackSpeed / 100f;
@@ -37,8 +43,7 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.SorcererEmblem).
-                AddIngredient(ItemID.CelestialEmblem).
+                AddIngredient<SigilofCalamitas>().
                 AddIngredient(ItemID.NebulaBlaze).
                 AddIngredient<ElementalRay>().
                 AddIngredient<TheSwarmer>().

@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Data;
 using CalamityMod;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Tiles.Furniture.CraftingStations;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -11,24 +13,24 @@ using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
 {
-    public class SoulPrestigeRogue : GenericPrestige
+    public class SoulPrestigeRogueII : GenericPrestige
     {
-        public static readonly int MaxStealth = 20;
-        public static readonly int Velocity = 10;
+        public static readonly int MaxStealth = 40;
+        public static readonly int Velocity = 25;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
         }
         public override void SetDefaults()
         {
-            Item.width = 38;
-            Item.height = 44;
-            Item.value = ValuePrestigeI;
-            Item.rare = RarityPrestigeI;
-            Item.defense = DefensePrestigeI;
+            Item.width = 94;
+            Item.height = 58;
+            Item.value = ValuePrestigeII;
+            Item.rare = RarityPrestigeII;
+            Item.defense = DefensePrestigeII;
             Item.accessory = true;
         }
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(MaxStealth, PrestigeIDamage * 100, PrestigeICrits, Velocity);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(MaxStealth, QuickCrtis, Velocity);
         public override void ExtraUpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage<RogueDamageClass>() += QuickDamage;
@@ -40,21 +42,18 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            base.ModifyTooltips(tooltips);
         }
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient<RogueEmblem>().
-                AddIngredient<DarkMatterSheath>().
-                AddIngredient<RaidersTalisman>().
-                AddIngredient<TotalityBreakers>().
-                AddIngredient<ElementalDisk>().
-                AddIngredient<StormfrontRazor>().
-                AddIngredient<SpearofDestiny>().
-                AddIngredient<CelestialReaper>().
-                AddIngredient(ItemID.LunarBar, 15).
-                AddTile(TileID.LunarCraftingStation).
+                AddIngredient<EclipseMirror>().
+                AddIngredient<Nanotech>().
+                AddIngredient<EclipsesFall>().
+                AddIngredient<Wrathwing>().
+                AddIngredient<GodsParanoia>().
+                AddIngredient<ExecutionersBlade>().
+                AddIngredient<AuricBar>(5).
+                AddTile<CosmicAnvil>().
                 Register();
         }
     }

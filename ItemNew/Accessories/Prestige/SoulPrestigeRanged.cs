@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CalamityMod;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Weapons.Ranged;
 using Terraria;
 using Terraria.ID;
@@ -16,14 +18,19 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         }
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            Item.width = Item.height = 42;
+            Item.value = ValuePrestigeI;
+            Item.rare = RarityPrestigeI;
+            Item.defense = DefensePrestigeI;
+            Item.accessory = true;
         }
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(QuickCrtis, AttackSpeed);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(PrestigeIDamage * 100, PrestigeICrits, AttackSpeed);
         public override void ExtraUpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage<RangedDamageClass>() += QuickDamage;
-            player.GetCritChance<RangedDamageClass>() += QuickCrtis;
+            player.GetDamage<RangedDamageClass>() += PrestigeIDamage;
+            player.GetCritChance<RangedDamageClass>() += PrestigeICrits;
             player.GetAttackSpeed<RangedDamageClass>() += AttackSpeed * 0.01f;
+            player.Calamity().deadshotBrooch = true;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
@@ -32,7 +39,7 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         public override void AddRecipes()
         {
             CreateRecipe().
-                AddIngredient(ItemID.RangerEmblem).
+                AddIngredient<DeadshotBrooch>().
                 AddIngredient(ItemID.ReconScope).
                 AddIngredient(ItemID.Phantasm).
                 AddIngredient<ConferenceCall>().

@@ -2,3 +2,8 @@ EnchUmbraphileBuff: {
 	// Description: Mods.CalamitySoulPorted.Buffs.EnchUmbraphileBuff.Description
 	// DisplayName: Ench Umbraphile Buff
 }
+
+EnchAeroFatigueBuff: {
+	// DisplayName: Ench Aero Fatigue Buff
+	// Description: Mods.CalamitySoulPorted.Buffs.EnchAeroFatigueBuff.Description
+}

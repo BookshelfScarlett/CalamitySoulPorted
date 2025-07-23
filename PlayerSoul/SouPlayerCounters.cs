@@ -30,6 +30,8 @@ namespace CalamitySoulPorted.PlayerSoul
         public bool PingGodSlayerMaxCD = false;
         //远古弑神魔石强起后的闪避
         public bool EnchAncientGodSlayerRebornDodge = true;
+        //天蓝魔石Jumping效果的CD
+        public int EnchAeroJumpingEffect = 0;
         public void EnchCounters()
         {
             //林海强起 
@@ -60,6 +62,9 @@ namespace CalamitySoulPorted.PlayerSoul
                 if (EmpyreanShieldCD == 0)
                     EmpyreanShieldTimes = 3;
             }
+            //天蓝Jumping 
+            if (EnchAeroJumpingEffect > 0)
+                EnchAeroJumpingEffect--;
         }
     }
 }

@@ -1,3 +1,7 @@
+using CalamityMod.Items.Armor.Aerospec;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Rogue;
 using CalamitySoulPorted.RarityCustom;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
@@ -18,7 +22,15 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PreHM
         public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchAerospec = true;
         public override void AddRecipes()
         {
-            base.AddRecipes();
+            CreateRecipe().
+                AddRecipeGroup(SoulRecpieGroupID.AerospecHead).
+                AddIngredient<AerospecBreastplate>().
+                AddIngredient<AerospecLeggings>().
+                AddIngredient<GoldplumeSpear>().
+                AddIngredient<Galeforce>().
+                AddIngredient<SkyStabber>().
+                AddTile(TileID.DemonAltar).
+                Register();
         }
     }
 }

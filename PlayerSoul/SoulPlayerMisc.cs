@@ -145,6 +145,11 @@ namespace CalamitySoulPorted.PlayerSoul
                     Player.AddBuff(ModContent.BuffType<EnchUmbraphileBuff>(), 2);
                 }
             }
+            //天蓝
+            if (EnchAerospec)
+            {
+                EnchAeroJumping = true;
+            }
             
         }
 

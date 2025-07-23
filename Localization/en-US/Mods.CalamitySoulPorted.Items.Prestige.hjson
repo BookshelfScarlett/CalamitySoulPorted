@@ -1,53 +1,105 @@
 SoulPrestigeMelee: {
-	DisplayName: Soul Prestige Melee
+	DisplayName: Melee Emblem Prestige
 	Tooltip:
 		'''
-		{CommonItemTooltip.PercentIncreasedMeleeDamageCritChance}
-		{CommonItemTooltip.PercentIncreasedMeleeSpeed@1}
+		{0}% increased melee damage
+		{1}% increased melee critical strike chance
+		{2}% increased melee speed
 		'''
 }
 
 SoulPrestigeMagic: {
-	DisplayName: Soul Prestige Magic
+	DisplayName: Magic Emblem Prestige
 	Tooltip:
 		'''
-		{CommonItemTooltip.PercentIncreasedMagicDamageCritChance}
-		{CommonItemTooltip.PercentReducedManaCost@1}
-		{CommonItemTooltip.IncreasesMaxManaBy@2}
-		Increases magic attack speed by {3}%
+		{0}% increased magic damage
+		{1}% increased magic critical strike chance
+		{2}% reduced mana usage
+		Increases max mana by {3}
+		Increases magic attack speed by {4}%
 		'''
 }
 
 SoulPrestigeRanged: {
-	DisplayName: Soul Prestige Ranged
+	DisplayName: Ranged Emblem Prestige
 	Tooltip:
 		'''
-		{CommonItemTooltip.PercentIncreasedRangedDamageCritChance}
-		Increases ranged attack speed by {1}%
+		{0}% increased ranged damage 
+		{1}% increased ranged critical strike chance
+		Increases ranged attack speed by {2}%
 		'''
 }
 
 SoulPrestigeRogue: {
-	DisplayName: Soul Prestige Rogue
+	DisplayName: Rogue Emblem Prestige
 	Tooltip:
 		'''
 		+ {0} max stealth
-		Increases rogue damage and critical strike chance by {1}%
-		Increases rogue velocity by {2}%
+		{1}% increased rogue damage, {2}% increased rogue critical strike chance
+		Increases rogue velocity by {3}%
 		'''
 }
 
 SoulPrestigeSummon: {
-	DisplayName: Soul Prestige Summon
+	DisplayName: Summon Emblem Prestige
 	Tooltip:
 		'''
-		{CommonItemTooltip.PercentIncreasedSummonDamageBy}
-		{CommonItemTooltip.IncreasesMaxMinionsBy@1}
-		{CommonItemTooltip.IncreasesMaxSentriesBy@2}
-		Your minions has {3}% chance to crit
-		{CommonItemTooltip.IncreasesWhipRangeByPercent@4}
-
+		{0}% increased summon damage
+		+{1} max minons
+		+{2} max sentries
+		Your minions have {3}% chance to crit
+		{4}% increased whip range
 		'''
 }
 
-GenericTooltip:""
+GenericTooltip: This is just the beginning...
+
+SoulPrestigeMagicII: {
+	DisplayName: Magic Emblem Prestige II
+	Tooltip:
+		'''
+		{0}% increased magic damage and critical strike chance
+		{1}% reduced mana usage
+		Increases max mana by {2}
+		{3}% increased magic attack speed
+		'''
+}
+
+SoulPrestigeMeleeII: {
+	DisplayName: Melee Emblem Prestige II
+	Tooltip:
+		'''
+		{0}% increased melee damage and critical strike chance
+		{1}% increased melee speed
+		'''
+}
+
+SoulPrestigeRangedII: {
+	DisplayName: Ranged Emblem Prestige II
+	Tooltip:
+		'''
+		{0}% increased ranged damage and critical strike chance
+		{1}% increased ranged attack speed
+		'''
+}
+
+SoulPrestigeRogueII: {
+	DisplayName: Rogue Emblem Prestige II
+	Tooltip:
+		'''
+		+{0} max stealth
+		{1}% increased rogue damage and critical strike chance
+		{2}% increased rogue velocity
+		'''
+}
+
+SoulPrestigeSummonII: {
+	DisplayName: Summon Emblem Prestige II
+	Tooltip:
+		'''
+		{0}% increased summon damage
+		+{1} max minons and {2} max sentries
+		Your minions have {3}% chance to crit
+		{4}% increased whip range
+		'''
+}

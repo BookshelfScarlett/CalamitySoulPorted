@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using CalamitySoulPorted.RarityCustom;
 using CalamitySoulPorted.SoulMethods;
+using Microsoft.Build.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -11,20 +13,23 @@ namespace CalamitySoulPorted.ItemNew.Accessories
     {
         public override string LocalizationCategory => "Items.Prestige";
         public string GeneralTooltipHelper => "Mods.CalamitySoulPorted.Items.Prestige.GenericTooltip";
+        public const float PrestigeIDamage = 0.20f;
+        public const int PrestigeICrits = 15;
         public const float QuickDamage = 0.30f;
         public const int QuickCrtis = 30;
+        public int RarityPrestigeI = ItemRarityID.Purple;
+        public int RarityPrestigeII = ModContent.RarityType<Force>();
+        public int ValuePrestigeI = Item.buyPrice(platinum: 1);
+        public int ValuePrestigeII = Item.buyPrice(platinum: 10);
+        public int DefensePrestigeI = 5;
+        public int DefensePrestigeII = 30;
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ItemNoGravity[Type] = true;
         }
         public override void SetDefaults()
         {
-            Item.width = 28;
-            Item.height = 28;
-            Item.rare = ItemRarityID.Purple;
-            Item.value = Item.buyPrice(platinum: 1);
-            Item.accessory = true;
-            Item.defense = 5;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

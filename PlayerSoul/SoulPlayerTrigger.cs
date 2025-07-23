@@ -1,5 +1,11 @@
+using System;
+using CalamitySoulPorted.BuffsPoted;
 using CalamitySoulPorted.SoulBuildUp;
+using CalamitySoulPorted.SoulMethods;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameInput;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.PlayerSoul
@@ -20,8 +26,34 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             //弑神魔石大冲。
             GodSlayerEnchantDashTrigger(triggersSet);
-            
+            AerospecEnchantJump(triggersSet);
             base.ProcessTriggers(triggersSet);
+        }
+
+        private void AerospecEnchantJump(TriggersSet triggersSet)
+        {
+            if (!EnchAerospec)
+                return;
+            if (SoulKeybind.EnchAeroDashKey.JustPressed && EnchAeroJumpingEffect <= 0)
+            {
+                int fatigue = ModContent.BuffType<EnchAeroFatigueBuff>();
+                int fatigueIndex = Player.FindBuffIndex(fatigue);
+
+                if (fatigueIndex == -1)
+                {
+                    Player.AddBuff(fatigue, 180);
+                    SoulDebug.DebugText("提供天蓝累死人Buff");
+                }
+                else if (Player.buffTime[fatigueIndex] < 1200)
+                {
+                    Player.buffTime[fatigueIndex] += 180;
+                    SoulDebug.DebugText("延长天蓝累死人Buff");
+                }
+                Player.dashDelay = EnchAeroJumpingEffect = 10;
+                EnchAeroJumpingDir = Player.AngleTo(Main.MouseWorld);
+                SoulDebug.DebugText("天蓝冲刺成功");
+                SoundEngine.PlaySound(SoundID.Item29, Player.Center);
+            }
         }
 
         private void GodSlayerEnchantDashTrigger(TriggersSet triggersSet)

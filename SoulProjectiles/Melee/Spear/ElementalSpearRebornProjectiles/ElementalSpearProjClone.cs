@@ -50,7 +50,7 @@ namespace CalamitySoulPorted.SoulProjectiles.Melee.Spear.ElementalSpearRebornPro
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
         }
-        public override bool? CanDamage() => AttackTimer > 30f;
+        public override Nullable<bool> CanDamage()/* tModPorter Suggestion: Return null instead of true */ => AttackTimer > 30f;
 
         public override void AI()
         {

@@ -11,6 +11,8 @@ AncientWulfrumEnchant: {
 AerospecEnchant: {
 	DisplayName: Aerospec Enchant
 	Tooltip: ""
+	Exhausted: ""
+	NotExhausted: ""
 }
 
 DesertProwlerEnchant: {

@@ -1,1 +1,25 @@
-// Keybinds.GodSlayerEnchantDash.DisplayName: God Slayer Enchant Dash
+Keybinds: {
+	// GodSlayerEnchantDash.DisplayName: God Slayer Enchant Dash
+	// AerospecEnchantDash.DisplayName: Aerospec Enchant Dash
+}
+
+Configs: {
+	DebugConfig: {
+		// DisplayName: Debug Config
+
+		DebugInt: {
+			// Label: Debug Int
+			// Tooltip: ""
+		}
+
+		DebugInt2: {
+			// Label: Debug Int2
+			// Tooltip: ""
+		}
+
+		DebugColor: {
+			// Label: Debug Color
+			// Tooltip: ""
+		}
+	}
+}

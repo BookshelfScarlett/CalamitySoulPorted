@@ -20,17 +20,22 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         }
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            Item.width = 54;
+            Item.height = 56;
+            Item.value = ValuePrestigeI;
+            Item.rare = RarityPrestigeI;
+            Item.defense = DefensePrestigeI;
+            Item.accessory = true;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
         }
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(QuickCrtis, MinionSlot, SentrySlot, QuickCrtis, WhipRange);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(PrestigeIDamage * 100, MinionSlot, SentrySlot, PrestigeICrits, WhipRange);
         public override void ExtraUpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage<SummonDamageClass>() += QuickDamage;
-            player.Soul().GetSummonCrits += QuickCrtis;
+            player.GetDamage<SummonDamageClass>() += PrestigeIDamage;
+            player.Soul().GetSummonCrits += PrestigeICrits;
             player.maxMinions += MinionSlot;
             player.maxTurrets += SentrySlot;
             player.whipRangeMultiplier += WhipRange * 0.01f;
