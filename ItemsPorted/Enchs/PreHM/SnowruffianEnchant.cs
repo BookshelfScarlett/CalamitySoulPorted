@@ -5,6 +5,8 @@ using CalamitySoulPorted.RarityCustom;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalamityMod.Items.Accessories;
+using CalamityMod;
 
 namespace CalamitySoulPorted.ItemsPorted.Enchs.PreHM
 {
@@ -18,7 +20,13 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PreHM
             Item.rare = ModContent.RarityType<EnchPreHardMode>();
             Item.value = SoulShopValue.EnchPreHardMode;
         }
-        public override void UpdateAccessory(Player player, bool hideVisual) => player.Soul().EnchSnowruffian = true;
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            var calPlayer = player.Calamity();
+            calPlayer.stealthStrike75Cost = true;
+            calPlayer.rogueStealthMax += 0.05f;
+            player.Soul().EnchSnowruffian = true;
+        }
         public override void AddRecipes()
         {
             CreateRecipe().
@@ -27,7 +35,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PreHM
                 AddIngredient<SnowRuffianGreaves>().
                 AddIngredient(ItemID.IceBoomerang).
                 AddIngredient(ItemID.FrostDaggerfish, 150).
-                AddIngredient<IcicleStaff>().
+                AddIngredient<CoinofDeceit>().
                 DisableDecraft().
                 AddTile(TileID.DemonAltar).
                 Register();

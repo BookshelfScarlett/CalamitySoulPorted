@@ -14,7 +14,7 @@ namespace CalamitySoulPorted.ItemNew.Accessories
         public override string LocalizationCategory => "Items.Prestige";
         public string GeneralTooltipHelper => "Mods.CalamitySoulPorted.Items.Prestige.GenericTooltip";
         public const float PrestigeIDamage = 0.20f;
-        public const int PrestigeICrits = 15;
+        public const int PrestigeICrits = 10;
         public const float QuickDamage = 0.30f;
         public const int QuickCrtis = 30;
         public int RarityPrestigeI = ItemRarityID.Purple;

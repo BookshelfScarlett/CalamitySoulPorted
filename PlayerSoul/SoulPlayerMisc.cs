@@ -1,4 +1,3 @@
-using System;
 using CalamityMod;
 using CalamityMod.Buffs.Summon;
 using CalamityMod.Cooldowns;
@@ -6,9 +5,8 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Projectiles.Summon;
 using CalamitySoulPorted.BuffsPoted;
-using CalamitySoulPorted.ItemNew.Accessories;
 using CalamitySoulPorted.ItemsPorted.Enchs.HM;
-using CalamitySoulPorted.SoulSounds;
+using CalamitySoulPorted.SoulCustomSounds;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -22,7 +20,6 @@ namespace CalamitySoulPorted.PlayerSoul
     {
         public override void PostUpdateMiscEffects()
         {
-            
             Enchantment();
             EnchantmentBuff();
             EnchCounters();
@@ -31,12 +28,10 @@ namespace CalamitySoulPorted.PlayerSoul
 
         }
 
+
         public void AccessoriesBuff()
         {
-            if (GuarrantedPrestige)
-            {
-                
-            }
+    
         }
 
         private void EnchantmentBuff()

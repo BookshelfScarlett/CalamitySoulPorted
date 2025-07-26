@@ -8,8 +8,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using CalamitySoulPorted.SoulMethods;
-using CalamitySoulPorted.SoulSounds;
 using CalamitySoulPorted.SoulProjectiles.Ranged.BlissfulBombardierRebornProjectiles;
+using CalamitySoulPorted.SoulCustomSounds;
 namespace CalamitySoulPorted.ItemNew.Weapons.RangedWeapon
 {
     public class BlissfulBombardierReborn : GenericRangedWeapon, ILocalizedModType

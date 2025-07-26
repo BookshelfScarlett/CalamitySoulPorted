@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CalamitySoulPorted.ItemNew;
+using CalamitySoulPorted.ItemNew.Accessories.CalamityModify;
+using CalamitySoulPorted.ItemNew.Accessories.CalamityModify.FuckCalamityRogue;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted
@@ -18,21 +20,39 @@ namespace CalamitySoulPorted
         private static CalamitySoulPorted instance;
         public override void Load()
 		{
-			FuckRecipeHooks();	
+			FuckRecipeHooks();
+			FuckCalamityStealthRogue();
 			base.Load();
 		}
-		public static void FuckRecipeHooks()
+
+        private void FuckCalamityStealthRogue()
+        {
+			//灾厄日蚀魔镜
+			ReworkEclipseMirror.Load();
+			//灾厄暗物质剑鞘
+			ReworkDarkMatterSheath.Load();
+			//灾厄毁灭勋章
+			ReworkRuinMedallion.Load();
+			//灾厄纳米技术
+			ReworkNanotech.Load();
+			//灾厄深渊魔镜
+			ReworkAbyssalMirror.Load();
+			//灾厄幻影魔镜
+			ReworkMirageMirror.Load();
+			//灾厄寂静刀鞘
+			ReworkSilenceSheath.Load();
+        }
+
+        public static void FuckRecipeHooks()
 		{
-			//草飞灾厄元素手套的合成表
-			FuckEGauntletRecipe.Load();
-			//草飞灾厄元素箭袋的合成表
-			FuckEQuiverRecipe.Load();
-			//草飞灾厄空灵护符的合成表
-			FuckETailsmanRecipe.Load();
-			//草飞灾厄核子之源的合成表
-			FuckNuclerRecipe.Load();
-			//草飞灾厄日蚀魔镜的合成表
-			FuckEMirrorRecipe.Load();
+			//灾厄核子之源
+			ReworkNucleogenesis.Load();
+			//灾厄元素手套
+			ReworkElementalGauntlet.Load();
+			//灾厄元素箭袋
+			ReworkElementalQuiver.Load();
+			//灾厄空灵护符
+			ReworkEtherealTalisman.Load();
 		}
 		public override void Unload()
 		{

@@ -11,7 +11,7 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
 {
     public class SoulPrestigeMelee : GenericPrestige, ILocalizedModType
     {
-        public const int AttackSpeed = 10; 
+        public const int AttackSpeed = 15; 
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

@@ -5,8 +5,8 @@ using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.Items.Armor.Silva;
 using CalamitySoulPorted.PlayerSoul.SoulDashesManage;
 using CalamitySoulPorted.SoulCooldowns.AncientGodSlayerReborn;
+using CalamitySoulPorted.SoulCustomSounds;
 using CalamitySoulPorted.SoulMethods;
-using CalamitySoulPorted.SoulSounds;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -100,6 +100,38 @@ namespace CalamitySoulPorted.PlayerSoul
                 EnchAncientGodSlayerRebornDodge = false;
                 return true;
             }
+            //玩家佩戴任意魔镜类饰品
+            if (MirrorLevel > 0)
+            {
+                const int MirageMirrorDodgeChance = 7;
+                const int AbyssalMirrorDodgeChance = 6;
+                const int EclipseMirrorDodgeChance = 5;
+                int giveChance = -1;
+                switch (MirrorLevel)
+                {
+                    case 1:
+                        //1/7
+                        giveChance = MirageMirrorDodgeChance;
+                        break;
+                    case 2:
+                        //1/6
+                        giveChance = AbyssalMirrorDodgeChance;
+                        break;
+                    case 3:
+                        //1/5
+                        giveChance = EclipseMirrorDodgeChance;
+                        break;
+                    default:
+                        break;
+                }
+                bool shouldDodgeChance = giveChance > 0 ? Main.rand.NextBool(giveChance) : false;
+                //闪避成功恢复对应的潜伏值。基础恢复50%，魔镜等级+1，提升恢复量
+                if (shouldDodgeChance)
+                {
+                    Player.Calamity().rogueStealth = Player.Calamity().rogueStealthMax * 0.25f * MirrorLevel;
+                }
+                return shouldDodgeChance;
+            }
             return false;
         }
 
@@ -182,6 +214,32 @@ namespace CalamitySoulPorted.PlayerSoul
         }
         public override void OnHurt(Player.HurtInfo info)
         {
+            var calPlayer = Player.Calamity();
+            if (MirrorLevel > 0)
+            {
+                const float MirageMirrorDodgeChance = 0.15f;
+                const float AbyssalMirrorDodgeChance = 0.30f;
+                const float EclipseMirrorDodgeChance = 0.50f;
+                float giveRegen = -1;
+                switch (MirrorLevel)
+                {
+                    case 1:
+                        //1/7
+                        giveRegen = MirageMirrorDodgeChance;
+                        break;
+                    case 2:
+                        //1/6
+                        giveRegen = AbyssalMirrorDodgeChance;
+                        break;
+                    case 3:
+                        //1/5
+                        giveRegen = EclipseMirrorDodgeChance;
+                        break;
+                    default:
+                        break;
+                }
+                calPlayer.rogueStealth = calPlayer.rogueStealthMax * giveRegen;
+            }
         }
     }
 }

@@ -47,7 +47,6 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         {
             CreateRecipe().
                 AddIngredient<EclipseMirror>().
-                AddIngredient<Nanotech>().
                 AddIngredient<EclipsesFall>().
                 AddIngredient<Wrathwing>().
                 AddIngredient<GodsParanoia>().

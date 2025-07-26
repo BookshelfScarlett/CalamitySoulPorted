@@ -18,6 +18,8 @@ namespace CalamitySoulPorted.PlayerSoul
             EffectSilva(target, hit);
         }
 
+    
+
         public void EffectUmbraphile(NPC target, Projectile proj)
         {
             if (!EnchUmbraphile)

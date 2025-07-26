@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CalamitySoulPorted")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7963ca63d7cb1ee779ef49498b18e2d3d27c1f53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+938fb39565beb46bb3aa3e4aa1009872c07f4298")]
 [assembly: System.Reflection.AssemblyProductAttribute("CalamitySoulPorted")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CalamitySoulPorted")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

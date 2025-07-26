@@ -1,7 +1,7 @@
 using Terraria.Audio;
 using Terraria.ID;
 
-namespace CalamitySoulPorted.SoulSounds
+namespace CalamitySoulPorted.SoulCustomSounds
 {
     public class SoulSoundID
     {

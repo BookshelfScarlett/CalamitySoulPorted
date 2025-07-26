@@ -1,4 +1,8 @@
+using System;
 using CalamityMod;
+using CalamityMod.CalPlayer;
+using CalamityMod.Items.Potions;
+using CalamityMod.Particles;
 using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -70,6 +74,11 @@ namespace CalamitySoulPorted.PlayerSoul
         #endregion
         #region 饰品
         public bool GuarrantedPrestige = false;
+        //原灾的Modify
+        //魔镜等级
+        public int MirrorLevel = 0;
+        //刀鞘等级
+        public int SheathLevel = 0;
         #endregion
         public override void ResetEffects()
         {
@@ -80,8 +89,14 @@ namespace CalamitySoulPorted.PlayerSoul
             ResetEnchPower();
             ResetTrigger();
             ResetAccessories();
-        }
+            //直接启用盗贼潜伏攻击
 
+            Player.Calamity().wearingRogueArmor = Player.HeldItem.CountClassAs<RogueDamageClass>();
+        }
+        public override void PreUpdate()
+        {
+            
+        }
         
 
         public override void UpdateDead()
@@ -105,13 +120,22 @@ namespace CalamitySoulPorted.PlayerSoul
 
         public void UpdateEnch()
         {
+            var calPlayer = Player.Calamity();
             //皇天魔石:继承日影魔石 + 启用盗贼潜伏 + 20潜伏值
             if (EnchEmpyrean)
             {
-                Player.Calamity().rogueStealthMax += 0.2f;
+                calPlayer.rogueStealthMax += 0.2f;
                 EmpyreanEnchForceStealth = true;
                 EnchUmbraphile = true;
             }
+            if (SheathLevel > 0)
+                GetSheathPoints(calPlayer);
+        }
+
+        public void GetSheathPoints(CalamityPlayer calPlayer)
+        {
+            float basicStealth = 0.05f;
+            calPlayer.rogueStealthMax += basicStealth * SheathLevel;
         }
         #endregion
         public override void PostUpdateRunSpeeds()
@@ -229,6 +253,8 @@ namespace CalamitySoulPorted.PlayerSoul
         public void ResetAccessories()
         {
             GuarrantedPrestige = false;
+            MirrorLevel = 0;
+            SheathLevel = 0;
         }
         #endregion
     }

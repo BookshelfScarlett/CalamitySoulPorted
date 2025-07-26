@@ -4,6 +4,7 @@ using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
+using CalamitySoulPorted.SoulMethods;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -33,7 +34,7 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         {
             player.GetDamage<RogueDamageClass>() += QuickDamage;
             player.GetCritChance<RogueDamageClass>() += QuickCrtis;
-            player.Calamity().rogueStealthMax += MaxStealth * 0.01f;
+            player.Soul().SheathLevel = 4;
             player.Calamity().rogueVelocity += Velocity * 0.01f;
             player.Calamity().stealthStrikeHalfCost = true;
             player.Calamity().wearingRogueArmor = true;
