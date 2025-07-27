@@ -7,3 +7,8 @@ ElementalSpearReborn: {
 		“并非撕裂宇宙，但仍足以针对神明”
 		'''
 }
+
+TesterSword: {
+	// DisplayName: Tester Sword
+	// Tooltip: ""
+}

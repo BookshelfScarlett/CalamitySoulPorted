@@ -1,6 +1,7 @@
 using System;
 using CalamityMod;
 using CalamityMod.Items.Weapons.Magic;
+using CalamitySoulPorted.ItemsPorted.Enchs.PreHM;
 using CalamitySoulPorted.SoulCustomSounds;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
@@ -11,6 +12,13 @@ namespace CalamitySoulPorted.PlayerSoul
 {
     public partial class SoulPlayer : ModPlayer
     {
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage)
+        {
+            if (EnchDesertProwlerDamage && item.ammo <= 0)
+            {
+                damage.Flat += DesertProwlerEnchant.DesertFlatDamage;
+            }
+        }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
             SetSummonCrits(proj, ref modifiers);

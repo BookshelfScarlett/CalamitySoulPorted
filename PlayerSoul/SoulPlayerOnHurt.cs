@@ -1,12 +1,14 @@
 using System;
-using System.Numerics;
+using System.Collections.Generic;
+using System.Linq;
 using CalamityMod;
 using CalamityMod.Buffs.StatBuffs;
+using CalamityMod.CalPlayer;
 using CalamityMod.Items.Armor.Silva;
-using CalamitySoulPorted.PlayerSoul.SoulDashesManage;
+using CalamitySoulPorted.ItemNew.Accessories.CalamityModify.FuckCalamityRogue;
+using CalamitySoulPorted.ItemsPorted.Enchs.PostML;
 using CalamitySoulPorted.SoulCooldowns.AncientGodSlayerReborn;
 using CalamitySoulPorted.SoulCustomSounds;
-using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -100,40 +102,16 @@ namespace CalamitySoulPorted.PlayerSoul
                 EnchAncientGodSlayerRebornDodge = false;
                 return true;
             }
+            #region 魔镜Dodge
             //玩家佩戴任意魔镜类饰品
-            if (MirrorLevel > 0)
-            {
-                const int MirageMirrorDodgeChance = 7;
-                const int AbyssalMirrorDodgeChance = 6;
-                const int EclipseMirrorDodgeChance = 5;
-                int giveChance = -1;
-                switch (MirrorLevel)
-                {
-                    case 1:
-                        //1/7
-                        giveChance = MirageMirrorDodgeChance;
-                        break;
-                    case 2:
-                        //1/6
-                        giveChance = AbyssalMirrorDodgeChance;
-                        break;
-                    case 3:
-                        //1/5
-                        giveChance = EclipseMirrorDodgeChance;
-                        break;
-                    default:
-                        break;
-                }
-                bool shouldDodgeChance = giveChance > 0 ? Main.rand.NextBool(giveChance) : false;
-                //闪避成功恢复对应的潜伏值。基础恢复50%，魔镜等级+1，提升恢复量
-                if (shouldDodgeChance)
-                {
-                    Player.Calamity().rogueStealth = Player.Calamity().rogueStealthMax * 0.25f * MirrorLevel;
-                }
-                return shouldDodgeChance;
-            }
+            if (MirrorDodge())
+                return true;
+            
             return false;
+            #endregion
         }
+
+        
 
         public void SendDodgeDust()
         {
@@ -165,23 +143,135 @@ namespace CalamitySoulPorted.PlayerSoul
                 }
             }
         }
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        {
+            //龙蒿盔甲韧性
+
+        }
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
-            GodSlayerEnchDR();
-            EmpyreanEnchDR();
+            // GodSlayerEnchDR();
+            // EmpyreanEnchDR();
+            if (EnchTarragonToughness)
+                ToughnessCalculate(npc.damage, ref modifiers);
             //直接乘以这个数
-            modifiers.SourceDamage *= GetDirectlyDR;
-            GetDirectlyDR = 1f;
+            // modifiers.SourceDamage *= GetDirectlyDR;
         }
+
+
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
-            GodSlayerEnchDR();
-            EmpyreanEnchDR();
+            // GodSlayerEnchDR();
+            // EmpyreanEnchDR();
+            if (EnchTarragonToughness)
+                ToughnessCalculate(proj.damage, ref modifiers);
             //直接乘以这个数
-            modifiers.SourceDamage *= GetDirectlyDR;
+            // modifiers.SourceDamage *= GetDirectlyDR;
             //计算完之后记得重置免伤数据
-            GetDirectlyDR = 1f;
         }
+        #region 龙蒿魔石盔甲韧性计算
+        private void ToughnessCalculate(int damage, ref Player.HurtModifiers modifiers)
+        {
+            int shouldTake = damage;
+            //将原始的伤害随机拆分成多个小块伤害，由大至小排序，每一小块伤害差值最少为50
+            List<int> damageList = SeperateDamageList(shouldTake);
+            int finalTaken = 0;
+            foreach (int dmg in damageList)
+            {
+                if (dmg < 0)
+                    continue;
+                
+                //将伤害表遍历进韧性衰减方法，伤害量越高，其韧性提供的伤害减免越强
+                float debugTough = TryCalToughness(dmg);
+                //获得一次韧性保护之后，直接将这个伤害乘以这个韧性并叠加
+                finalTaken += (int)(dmg * (1f - debugTough));
+            }
+            //最终承伤
+            modifiers.FinalDamage.Flat -= damage - finalTaken;
+        }
+        public float TryCalToughness(int damage)
+        {
+            //开始进行盔甲韧性的计算
+            //最低趋近韧性：5%，最高趋近韧性：30%
+            const float miniTough = TarragonEnchant.ArmorToughnessMin;
+            const float maxTough = TarragonEnchant.ArmorToughnessMax;
+            //衰减系数：0.25%
+            const float k = TarragonEnchant.ArmorToughnessReduceRate;
+            //计算实际韧性，玩家防御越高，韧性的衰减速度会越高
+            float tough = miniTough + (maxTough - miniTough) * (1 - (float)Math.Exp(-k * damage));
+            //使结果不会低于最小值
+            return Math.Max(miniTough, tough);
+        }
+        public static List<int> SeperateDamageList(int damage)
+        {
+            //获取随机值
+            Random rand = new();
+            //建空表
+            List<int> list = [];
+            int divityRateMin = TarragonEnchant.DamageDivityRateMin;
+            int divityRateMax = TarragonEnchant.DamageDivityRateMax;
+            bool shouldBreakLoop = false;
+            while (!shouldBreakLoop)
+            {
+                //清理可能无效的结果
+                list.Clear();
+                shouldBreakLoop = true;
+                //依据随机值取传入进来的伤害的可能存在的最大数
+                int possbileMax = 1;
+                //可能是这里有问题（？
+                while (true)
+                {
+                    int possibleCount = possbileMax + 1;
+                    int minSum = TryCalMinSum(possbileMax, damage, divityRateMin);
+                    if (minSum > damage)
+                        break;
+                    possbileMax = possibleCount;
+                }
+                //择优录取（X）随机选择至少两个数
+                int count = rand.Next(2, possbileMax + 1);
+                //生成随机差值
+                int totalDiffer = 0;
+                int[] randDiffer = new int[count - 1];
+                for (int i = 0; i < randDiffer.Length; i++)
+                {
+                    randDiffer[i] = rand.Next(divityRateMin, divityRateMax + 1);
+                    totalDiffer += randDiffer[i];
+                }
+                //计算第一个数的值
+                int firstNum = (damage + totalDiffer) / count;
+                //然后，生成所有的数值
+                list.Add(firstNum);
+                int cur = firstNum;
+
+                foreach (int differ in randDiffer)
+                {
+                    cur -= differ;
+                    list.Add(cur);
+                }
+                //将总和精确性地调整为原本的伤害值
+                int listTotal = list.Sum();
+                if (listTotal != damage)
+                {
+                    int adjust = damage - listTotal;
+                    //如果存在误差，将其直接给第一个数
+                    list[0] += adjust;
+                }
+                //如果存在负数则重新生成
+                foreach (int val in list)
+                {
+                    if (val <= 0)
+                    {
+                        shouldBreakLoop = false;
+                        break;
+                    }
+                }
+            }
+            //将排序好的表单返回即可
+            return list;
+        }
+        //计算i个数字的最小可能总和（差值都取50）
+        public static int TryCalMinSum(int i, int damage, int divityRateMin) => (damage * 2 + divityRateMin * (i - 1) * (i - 2)) / (2 * i);
+        #endregion
         //皇天魔石三次机会
         public void EmpyreanEnchDR()
         {
@@ -215,25 +305,68 @@ namespace CalamitySoulPorted.PlayerSoul
         public override void OnHurt(Player.HurtInfo info)
         {
             var calPlayer = Player.Calamity();
-            if (MirrorLevel > 0)
+            MirrorStealthRegen(calPlayer);
+            if (EnchTarragonToughness && EnchTarragonTakeDamage == 0)
             {
-                const float MirageMirrorDodgeChance = 0.15f;
-                const float AbyssalMirrorDodgeChance = 0.30f;
-                const float EclipseMirrorDodgeChance = 0.50f;
-                float giveRegen = -1;
+                int actualDamage = info.Damage - Player.statDefense;
+                if (actualDamage < info.Damage * 0.85f)
+                    return;
+                EnchTarragonTakeDamage = actualDamage;
+            }
+        }
+        #region 魔镜承伤相关
+        public bool MirrorDodge()
+        {
+
+
+            //没有魔镜等级直接返回
+            if (MirrorLevel <= 0)
+                return false;
+            else
+            {
+                int giveChance = -1;
                 switch (MirrorLevel)
                 {
                     case 1:
                         //1/7
-                        giveRegen = MirageMirrorDodgeChance;
+                        giveChance = ReworkMirageMirror.DodgeChance;
                         break;
                     case 2:
                         //1/6
-                        giveRegen = AbyssalMirrorDodgeChance;
+                        giveChance = ReworkAbyssalMirror.DodgeChance;
                         break;
                     case 3:
                         //1/5
-                        giveRegen = EclipseMirrorDodgeChance;
+                        giveChance = ReworkEclipseMirror.DodgeChance;
+                        break;
+                    default:
+                        break;
+                }
+                bool shouldDodgeChance = giveChance > 0 ? Main.rand.NextBool(giveChance) : false;
+                //闪避成功恢复对应的潜伏值。基础恢复50%，魔镜等级+1，提升恢复量
+                if (shouldDodgeChance)
+                    Player.Calamity().rogueStealth = Player.Calamity().rogueStealthMax * 0.25f * MirrorLevel;
+                return shouldDodgeChance;
+            }
+        }
+        public void MirrorStealthRegen(CalamityPlayer calPlayer)
+        {
+            if (MirrorLevel > 0)
+            {
+                float giveRegen = 0f;
+                switch (MirrorLevel)
+                {
+                    case 1:
+                        //1/7
+                        giveRegen = ReworkMirageMirror.OnHurtStealthRegen;
+                        break;
+                    case 2:
+                        //1/6
+                        giveRegen = ReworkAbyssalMirror.OnHurtStealthRegen;
+                        break;
+                    case 3:
+                        //1/5
+                        giveRegen = ReworkEclipseMirror.OnHurtStealthRegen;
                         break;
                     default:
                         break;
@@ -241,5 +374,6 @@ namespace CalamitySoulPorted.PlayerSoul
                 calPlayer.rogueStealth = calPlayer.rogueStealthMax * giveRegen;
             }
         }
+        #endregion
     }
 }

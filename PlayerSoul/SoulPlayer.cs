@@ -3,6 +3,7 @@ using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
+using CalamitySoulPorted.ItemsPorted.Enchs.PreHM;
 using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -71,6 +72,20 @@ namespace CalamitySoulPorted.PlayerSoul
         public bool EnchAeroJumping = false;
         //天蓝魔石冲刺方向
         public float EnchAeroJumpingDir;
+        public bool EnchDesertProwlerDamage;
+        //斯塔提斯擦弹
+        public bool EnchStatigelArea = false;
+        //合成岩魔石放置距离，挖掘速度等
+        public bool EnchMarniteArchStat = false;
+        //合成岩魔石熔炼效果
+        public bool EnchMarniteArchAutoSmelt = false;
+        //合成岩魔石自动合成
+        public bool EnchMarniteArchAutoCraft = false;
+        //雪景暴徒效果
+        public bool EnchSnowruffianFalling = false;
+        //龙蒿盔甲韧性
+        public bool EnchTarragonToughness = false;
+        public int EnchTarragonTakeDamage = 0;
         #endregion
         #region 饰品
         public bool GuarrantedPrestige = false;
@@ -80,44 +95,21 @@ namespace CalamitySoulPorted.PlayerSoul
         //刀鞘等级
         public int SheathLevel = 0;
         #endregion
-        public override void ResetEffects()
-        {
-            ResetNumber();
-            ResetEnchPreHM();
-            ResetEnchHM();
-            ResetEnchPostML();
-            ResetEnchPower();
-            ResetTrigger();
-            ResetAccessories();
-            //直接启用盗贼潜伏攻击
-
-            Player.Calamity().wearingRogueArmor = Player.HeldItem.CountClassAs<RogueDamageClass>();
-        }
+        
         public override void PreUpdate()
         {
             
         }
         
 
-        public override void UpdateDead()
-        {
-            IsUsedEnchSilvaReborn = false;
-            UpdateDeadTrigger();
-        }
+        
+        #region Update Equips
         public override void UpdateEquips()
         {
             UpdateEnch();
-            UpdateEnchPower();
+            UpdateOthers();
         }
-        #region Update Equips
-        public void UpdateEnchPower()
-        {
-            if (EmpyreanEnchForceStealth)
-            {
-                Player.Calamity().wearingRogueArmor = true;
-            }
-        }
-
+        //更新魂石效果
         public void UpdateEnch()
         {
             var calPlayer = Player.Calamity();
@@ -128,6 +120,26 @@ namespace CalamitySoulPorted.PlayerSoul
                 EmpyreanEnchForceStealth = true;
                 EnchUmbraphile = true;
             }
+            //合成岩建筑师：数值，无视
+            if (EnchMarniteArchitect)
+            {
+                EnchMarniteArchStat = true;
+                EnchMarniteArchAutoCraft = true;
+            }
+            if (EnchMarniteArchStat)
+            {
+                Player.pickSpeed -= MarniteArchitectEnchant.MiningSpeed * 0.01f;
+                Player.tileRangeX += MarniteArchitectEnchant.TileRange;
+                Player.tileRangeY += MarniteArchitectEnchant.TileRange;
+                Player.tileSpeed += MarniteArchitectEnchant.PlaceSpeed * 0.01f; 
+            }
+            
+        }
+        //其他与魂石无关的效果
+        private void UpdateOthers()
+        {
+
+            var calPlayer = Player.Calamity();
             if (SheathLevel > 0)
                 GetSheathPoints(calPlayer);
         }
@@ -138,13 +150,12 @@ namespace CalamitySoulPorted.PlayerSoul
             calPlayer.rogueStealthMax += basicStealth * SheathLevel;
         }
         #endregion
+
+        #region CustomDash
         public override void PostUpdateRunSpeeds()
         {
-            #region CustomDash
             EnchAeroDashing();
-            #endregion
         }
-
         public void EnchAeroDashing()
         {
             if (!EnchAerospec)
@@ -193,12 +204,33 @@ namespace CalamitySoulPorted.PlayerSoul
 
             }
         }
+        #endregion
         #region Reset
+        public override void ResetEffects()
+        {
+            ResetNumber();
+            ResetEnchPreHM();
+            ResetEnchHM();
+            ResetEnchPostML();
+            ResetEnchPower();
+            ResetTrigger();
+            ResetAccessories();
+            //直接启用盗贼潜伏攻击
+            Player.Calamity().wearingRogueArmor = Player.HeldItem.CountClassAs<RogueDamageClass>();
+        }
+        //重置魂石特殊效果
         public void ResetEnchPower()
         {
             EmpyreanEnchForceStealth = false;
+            EnchDesertProwlerDamage = false;
+            EnchStatigelArea = false;
+            EnchMarniteArchAutoSmelt = false;
+            EnchMarniteArchStat = false;
+            EnchSnowruffianFalling = false;
+            EnchTarragonToughness = false;
+            EnchTarragonTakeDamage = 0;
         }
-
+        //重置月后魂石
         public void ResetEnchPostML()
         {
             EnchEmpyrean = false;
@@ -215,7 +247,7 @@ namespace CalamitySoulPorted.PlayerSoul
             EnchGemTech = false;
             EnchCalamitas = false;
         }
-
+        //重置肉后魂石
         public void ResetEnchHM()
         {
             EnchDaedalus = false;
@@ -231,7 +263,7 @@ namespace CalamitySoulPorted.PlayerSoul
             EnchMollusk = false;
             EnchForbidden = false;
         }
-
+        //重置肉前魂石
         public void ResetEnchPreHM()
         {
             EnchWulfrum = false;
@@ -249,6 +281,8 @@ namespace CalamitySoulPorted.PlayerSoul
             GetAcceleration = 1f;
             GetRunSpeed = 1f;
             GetSummonCrits = 0;
+            GetDamageMult = 1f;
+            GetDirectlyDR = 1f;
         }
         public void ResetAccessories()
         {
@@ -256,6 +290,16 @@ namespace CalamitySoulPorted.PlayerSoul
             MirrorLevel = 0;
             SheathLevel = 0;
         }
+        //死亡时重置
+        public override void UpdateDead()
+        {
+            IsUsedEnchSilvaReborn = false;
+            UpdateDeadTrigger();
+        }
         #endregion
+        public override void Load()
+        {
+            base.Load();
+        }
     }
 }

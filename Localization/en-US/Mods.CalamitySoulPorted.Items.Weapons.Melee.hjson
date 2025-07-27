@@ -2,3 +2,8 @@ ElementalSpearReborn: {
 	DisplayName: Elemental Spear Reborn
 	Tooltip: ""
 }
+
+TesterSword: {
+	DisplayName: Tester Sword
+	Tooltip: ""
+}

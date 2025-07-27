@@ -16,13 +16,25 @@ AerospecEnchant: {
 }
 
 DesertProwlerEnchant: {
-	// DisplayName: Desert Prowler Enchant
-	// Tooltip: ""
+	DisplayName: 沙漠行者
+	Tooltip:
+		'''
+		增加武器{0}的面板
+		「面对沙暴吧。」
+		'''
 }
 
 MarniteArchitectEnchant: {
-	// DisplayName: Marnite Architect Enchant
-	// Tooltip: ""
+	DisplayName: 合成岩建筑师
+	Tooltip:
+		'''
+		增加{0}%挖掘速度
+		增加{1}方块放置距离，{2}%方块放置速度
+		允许凭空放置物块
+		挖掘矿石时将会自动熔炼你的矿物，期望转化比为{3} : 1
+		可通过饰品可见性开关这个效果
+		「创造的乐趣」
+		'''
 }
 
 SnowRuffianEnchant: {

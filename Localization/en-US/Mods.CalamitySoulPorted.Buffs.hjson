@@ -7,3 +7,8 @@ EnchAeroFatigueBuff: {
 	DisplayName: Ench Aero Fatigue Buff
 	Description: Mods.CalamitySoulPorted.Buffs.EnchAeroFatigueBuff.Description
 }
+
+EnchStatigelDamageBuff: {
+	DisplayName: Ench Statigel Damage Buff
+	Description: Mods.CalamitySoulPorted.Buffs.EnchStatigelDamageBuff.Description
+}

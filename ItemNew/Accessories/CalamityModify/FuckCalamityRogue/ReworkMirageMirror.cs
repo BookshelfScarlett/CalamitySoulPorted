@@ -11,6 +11,8 @@ namespace CalamitySoulPorted.ItemNew.Accessories.CalamityModify.FuckCalamityRogu
 {
     public class ReworkMirageMirror
     {
+        public const int DodgeChance = 7;
+        public const float OnHurtStealthRegen = 0.015f;
         public static void Load()
         {
             MethodInfo fuckRecipe = typeof(MirageMirror).GetMethod(nameof(MirageMirror.AddRecipes));

@@ -1,12 +1,10 @@
 using CalamityMod;
-using CalamityMod.Buffs.Summon;
 using CalamityMod.Cooldowns;
-using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Silva;
-using CalamityMod.Projectiles.Summon;
 using CalamitySoulPorted.BuffsPoted;
 using CalamitySoulPorted.ItemsPorted.Enchs.HM;
 using CalamitySoulPorted.SoulCustomSounds;
+using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -25,13 +23,67 @@ namespace CalamitySoulPorted.PlayerSoul
             EnchCounters();
             AccessoriesBuff();
             CustomSpeedUpdate();
-
+            EffectRelatedOnNPC();
         }
 
+        private void EffectRelatedOnNPC()
+        {
+        }
 
         public void AccessoriesBuff()
         {
-    
+            #region 斯塔提斯擦弹
+            bool statisShouldGaze = false;
+            //擦撞NPC
+            foreach (NPC npc in Main.npc)
+            {
+                if (!npc.active)
+                    continue;
+
+                float distRec = SoulMethod.DistFromRectan(Player.Center, npc.Hitbox);
+                float dist = (Player.Center - npc.Center).Length();
+
+                if (!npc.friendly && npc.damage > 0 && EnchStatigelArea)
+                {
+                    Main.NewText("擦撞NPC");
+                    statisShouldGaze = StatisGaze(distRec);
+                }
+            }
+            //擦撞Projs
+            foreach (Projectile proj in Main.projectile)
+            {
+                if (!proj.active)
+                    continue;
+                
+                float distRec = SoulMethod.DistFromRectan(Player.Center, proj.Hitbox);
+                if (!statisShouldGaze && proj.hostile && distRec < 125f && EnchStatigelArea)
+                {
+                    statisShouldGaze = true;
+                    Main.NewText("擦撞射弹");
+                }
+            }
+            //处理擦弹buff
+            if (statisShouldGaze && EnchStatigelArea)
+            {
+                int statigelBuffType = ModContent.BuffType<EnchStatigelDamageBuff>();
+                int getIndex = Player.FindBuffIndex(statigelBuffType);
+                if (getIndex == -1)
+                {
+                    Player.AddBuff(statigelBuffType, 900);
+                    Player.GiveImmnueTime(90);
+                }
+            }
+            #endregion
+        }
+
+        private bool StatisGaze(float distRec)
+        {
+            if (!EnchStatigelArea)
+                return false;
+            if (distRec < 125f)
+                return true;
+
+            return false;
         }
 
         private void EnchantmentBuff()
@@ -45,39 +97,23 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             var calPlayer = Player.Calamity();
             //钨钢
-            if (EnchWulfrum)
-            {
-                int droneBuff = ModContent.BuffType<WulfrumDroidBuff>();
-                //给生命恢复与1栏位
-                Player.maxMinions += 1;
-                Player.lifeRegen += 2;
-                //挖掘速度
-                Player.pickSpeed -= 0.25f;
-                //无人机
-                Player.maxMinions += 2;
-                if (Player.FindBuffIndex(droneBuff) == -1)
-                    Player.AddBuff(droneBuff, 3600, true);
-
-                if (Player.ownedProjectileCounts[ModContent.ProjectileType<WulfrumDroid>()] < 2)
-                     Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<WulfrumDroid>(), (int)Player.GetTotalDamage<SummonDamageClass>().ApplyTo(16), 0f, Player.whoAmI);
-                //盾
-                calPlayer.roverDrive = true;
-                if (calPlayer.RoverDriveShieldDurability > 0)
-                    Player.statDefense += RoverDrive.ShieldDefenseBoost;
-                
-            }
+            EnchWulfrumEffect(calPlayer);
             //雪境
             if (EnchSnowruffian)
+                EnchSnowruffianFalling = true;
+            //沙漠行者：面板伤害
+            if (EnchDesertProwler)
+                EnchDesertProwlerDamage = true;
+
+            if (EnchStatigel)
+                EnchStatigelArea = true;
+
+            if (EnchTarragon)
             {
-                //空中移速
-                if (Player.velocity.Y != 0)
-                {
-                    GetRunSpeed *= 1.2f;
-                    GetAcceleration *= 1.2f;
-                }
-                //免疫摔落伤害
-                Player.noFallDmg = true;
+                EnchTarragonToughness = true;
+                Player.noKnockback = true;
             }
+
             #region 林海相关
             //林海自起
             if (IsUsedEnchSilvaReborn && EnchSilvaRebornCounter > 0)
@@ -117,6 +153,7 @@ namespace CalamitySoulPorted.PlayerSoul
                 }
             }
             #endregion
+            //日影魔石将会重置
             if (EnchUmbraphile)
             {
                 //蓄能大于10秒即可
@@ -140,12 +177,12 @@ namespace CalamitySoulPorted.PlayerSoul
                     Player.AddBuff(ModContent.BuffType<EnchUmbraphileBuff>(), 2);
                 }
             }
-            //天蓝
+            //天蓝：冲刺
             if (EnchAerospec)
-            {
                 EnchAeroJumping = true;
-            }
-            
+            //合成岩建筑师：自动熔炼
+            if (EnchMarniteArchitect)
+                EnchMarniteArchAutoSmelt = true;
         }
 
         public void EnchSilvaDust()

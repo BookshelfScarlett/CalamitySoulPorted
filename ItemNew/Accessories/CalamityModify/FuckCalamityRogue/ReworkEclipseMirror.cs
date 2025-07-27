@@ -12,6 +12,8 @@ namespace CalamitySoulPorted.ItemNew.Accessories.CalamityModify.FuckCalamityRogu
 {
     public class ReworkEclipseMirror 
     {
+        public const int DodgeChance = 5;
+        public const float OnHurtStealthRegen = 0.50f;
         public static void Load()
         {
             MethodInfo fuckRecipe = typeof(EclipseMirror).GetMethod(nameof(EclipseMirror.AddRecipes));

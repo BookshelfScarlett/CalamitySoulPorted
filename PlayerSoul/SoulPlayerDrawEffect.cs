@@ -26,7 +26,6 @@
 //         protected override void Draw(ref PlayerDrawSet drawInfo)
 //         {
 //             // EnchAeroJumpingDraw(ref drawInfo);
-//             throw new System.NotImplementedException();
 //         }
 
 //         // private void EnchAeroJumpingDraw(ref PlayerDrawSet drawInfo)

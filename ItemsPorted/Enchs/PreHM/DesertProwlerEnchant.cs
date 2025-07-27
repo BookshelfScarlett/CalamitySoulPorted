@@ -1,3 +1,6 @@
+using CalamityMod.Items.Armor.DesertProwler;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Summon;
 using CalamitySoulPorted.RarityCustom;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
@@ -9,7 +12,7 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PreHM
 {
     public class DesertProwlerEnchant : GenericEnchant, ILocalizedModType
     {
-        const int DesertFlatDamage = 12;
+        public const int DesertFlatDamage = 12;
         public override string Category => PreHardMode;
         public override int GiveValue => base.GiveValue;
         public override void SetDefaults()
@@ -22,7 +25,15 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PreHM
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(DesertFlatDamage);
         public override void AddRecipes()
         {
-            base.AddRecipes();
+            CreateRecipe().
+                AddIngredient<DesertProwlerHat>().
+                AddIngredient<DesertProwlerShirt>().
+                AddIngredient<DesertProwlerPants>().
+                AddIngredient<StormjawStaff>().
+                AddIngredient<SunSpiritStaff>().
+                AddIngredient(ItemID.Sandgun).
+                AddTile(TileID.DemonAltar).
+                Register();
         }
     }
 }
