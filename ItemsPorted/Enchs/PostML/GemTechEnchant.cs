@@ -2,6 +2,8 @@ using CalamitySoulPorted.SoulMethods;
 using Terraria;
 using Terraria.ModLoader;
 using CalamitySoulPorted.RarityCustom;
+using CalamityMod.Items.Accessories;
+using System.Linq;
 
 namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
 {

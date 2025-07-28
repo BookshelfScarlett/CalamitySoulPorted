@@ -3,6 +3,8 @@ using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Potions;
 using CalamityMod.Particles;
+using CalamitySoulPorted.BuffsPoted;
+using CalamitySoulPorted.ItemsPorted.Enchs.PostML;
 using CalamitySoulPorted.ItemsPorted.Enchs.PreHM;
 using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
@@ -86,6 +88,10 @@ namespace CalamitySoulPorted.PlayerSoul
         //龙蒿盔甲韧性
         public bool EnchTarragonToughness = false;
         public int EnchTarragonTakeDamage = 0;
+        //血药过饱和
+        public bool EnchBloodflareOverSatu = false;
+        public bool EnchBloodFlareIsDoneSatu = false;
+        public bool EnchBloodFlareCanHealAgain = false;
         #endregion
         #region 饰品
         public bool GuarrantedPrestige = false;
@@ -133,6 +139,9 @@ namespace CalamitySoulPorted.PlayerSoul
                 Player.tileRangeY += MarniteArchitectEnchant.TileRange;
                 Player.tileSpeed += MarniteArchitectEnchant.PlaceSpeed * 0.01f; 
             }
+            
+            if (EnchBloodflare)
+                BloodflareHealingEffect(calPlayer);
             
         }
         //其他与魂石无关的效果
@@ -229,6 +238,7 @@ namespace CalamitySoulPorted.PlayerSoul
             EnchSnowruffianFalling = false;
             EnchTarragonToughness = false;
             EnchTarragonTakeDamage = 0;
+            EnchBloodflareOverSatu = false;
         }
         //重置月后魂石
         public void ResetEnchPostML()
@@ -294,6 +304,8 @@ namespace CalamitySoulPorted.PlayerSoul
         public override void UpdateDead()
         {
             IsUsedEnchSilvaReborn = false;
+            EnchBloodFlareIsDoneSatu = false;
+            EnchBloodFlareCanHealAgain = false;
             UpdateDeadTrigger();
         }
         #endregion

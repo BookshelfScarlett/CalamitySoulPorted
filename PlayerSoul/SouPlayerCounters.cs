@@ -1,6 +1,8 @@
 using CalamityMod;
 using CalamityMod.Cooldowns;
+using CalamitySoulPorted.BuffsPoted;
 using CalamitySoulPorted.SoulCooldowns.AncientGodSlayerReborn;
+using CalamitySoulPorted.SoulMethods;
 using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.PlayerSoul
@@ -32,6 +34,10 @@ namespace CalamitySoulPorted.PlayerSoul
         public bool EnchAncientGodSlayerRebornDodge = true;
         //天蓝魔石Jumping效果的CD
         public int EnchAeroJumpingEffect = 0;
+        //血炎魔石的保底治疗
+        public int EnchBloodflareCurChance = 0;
+        //全局射弹CD
+        public int HealProjCD = 0;
         public void EnchCounters()
         {
             //林海强起 
@@ -55,7 +61,7 @@ namespace CalamitySoulPorted.PlayerSoul
             //远古弑神魔石强起CD结束后重置这个闪避
             if (!Player.HasCooldown(AncientGodSlayerCooldown.ID))
                 EnchAncientGodSlayerRebornDodge = true;
-            
+
             if (EnchEmpyrean && EmpyreanShieldCD > 0)
             {
                 EmpyreanShieldCD--;
@@ -65,6 +71,9 @@ namespace CalamitySoulPorted.PlayerSoul
             //天蓝Jumping 
             if (EnchAeroJumpingEffect > 0)
                 EnchAeroJumpingEffect--;
+            if (HealProjCD > 0)
+                HealProjCD--;
+        
         }
     }
 }

@@ -16,9 +16,10 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             EffectSnowRuffian(target);
             EffectSilva(target, hit);
+            EffectBloodflareEnchDrain(target, hit);
         }
 
-    
+       
 
         public void EffectUmbraphile(NPC target, Projectile proj)
         {
@@ -44,6 +45,7 @@ namespace CalamitySoulPorted.PlayerSoul
             EffectSnowRuffian(target);
             EffectSilva(target, hit);
             EffectUmbraphile(target, proj);
+            EffectBloodflareEnchDrain(target, hit);
             
         }
 

@@ -14,11 +14,11 @@ namespace CalamitySoulPorted.ItemsPorted.Enchs.PostML
     public class TarragonEnchant : GenericEnchant, ILocalizedModType
     {
         public override string Category => PostML;
-        public const float ArmorToughnessMax = 0.30f;
-        public const float ArmorToughnessMin = 0.05f;
-        public const float ArmorToughnessReduceRate = 0.0025f;
+        public const float ArmorToughnessMax = 0.45f;
+        public const float ArmorToughnessMin = 0.02f;
+        public const float ArmorToughnessReduceRate = 0.0040f;
         public const int DamageDivityRateMin = 75;
-        public const int DamageDivityRateMax = 120;
+        public const int DamageDivityRateMax = 125;
         public override void SetDefaults()
         {
             base.SetDefaults();

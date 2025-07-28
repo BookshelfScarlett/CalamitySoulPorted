@@ -30,6 +30,8 @@ namespace CalamitySoulPorted.SoulMethods
                 _ => LocalizedTextHandler("Items.Enchs.PostML" + "." + wantedEnch),
             };
         }
+        public static int FloatToInt(this float single) => (int)(single * 100f);
+        public static int IntToFrames(this int inte) => inte * 60;
 
     }
 }

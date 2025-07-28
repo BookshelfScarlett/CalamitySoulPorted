@@ -1,5 +1,5 @@
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables.Ores;
+using CalamitySoulPorted.BuffsPoted;
+using CalamitySoulPorted.ItemsPorted.Enchs.PostML;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
 using Terraria.DataStructures;
@@ -20,6 +20,7 @@ namespace CalamitySoulPorted.ItemNew.Weapons
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
         }
+        public override bool AltFunctionUse(Player player) => true;
         public override bool? UseItem(Player player)
         {
             #region 自动合成
@@ -44,7 +45,15 @@ namespace CalamitySoulPorted.ItemNew.Weapons
             */
             #endregion
             #region 自裁
-            player.Hurt(PlayerDeathReason.ByCustomReason($"{player.name}!不要自杀!"), Main.rand.Next(140, 400), 0);
+            if (player.itemAnimation == player.itemAnimationMax)
+            {
+                player.Hurt(PlayerDeathReason.ByCustomReason($"{player.name}！不要自杀！"), Main.rand.Next(140, 400), 0);
+                player.AddBuff<EnchBloodflareOverSatuBuff>(BloodflareEnchant.OverSaturationTime * 60);
+            }
+            else if (player.altFunctionUse == 2)
+            {
+                player.HandlePotionSick();
+            }
             #endregion
             return base.UseItem(player);
         }

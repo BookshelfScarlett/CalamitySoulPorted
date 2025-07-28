@@ -1,13 +1,18 @@
+using System;
 using CalamityMod;
+using CalamityMod.CalPlayer;
 using CalamityMod.Cooldowns;
 using CalamityMod.Items.Armor.Silva;
+using CalamityMod.Items.Potions.Alcohol;
 using CalamitySoulPorted.BuffsPoted;
 using CalamitySoulPorted.ItemsPorted.Enchs.HM;
+using CalamitySoulPorted.ItemsPorted.Enchs.PostML;
 using CalamitySoulPorted.SoulCustomSounds;
 using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,6 +21,12 @@ namespace CalamitySoulPorted.PlayerSoul
 {
     public partial class SoulPlayer : ModPlayer
     {
+        public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
+        {
+            HandleBloodflareGetHeal(item, quickHeal, ref healValue);
+            base.GetHealLife(item, quickHeal, ref healValue);
+        }
+        
         public override void PostUpdateMiscEffects()
         {
             Enchantment();
@@ -24,6 +35,9 @@ namespace CalamitySoulPorted.PlayerSoul
             AccessoriesBuff();
             CustomSpeedUpdate();
             EffectRelatedOnNPC();
+            //血炎魔石的过饱和
+            HandlePotionSickForEnchBF();
+            
         }
 
         private void EffectRelatedOnNPC()

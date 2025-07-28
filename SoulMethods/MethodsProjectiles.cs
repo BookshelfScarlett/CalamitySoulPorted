@@ -1,6 +1,9 @@
 using System;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.SoulMethods
 {
@@ -199,6 +202,27 @@ namespace CalamitySoulPorted.SoulMethods
             }
             //否则返回射弹原本的额外更新
             else proj.extraUpdates = proj.Soul().StoreEU;
+        }
+        /// <summary>
+        /// 生成治疗射弹
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="src"></param>
+        /// <param name="pos"></param>
+        /// <param name="player"></param>
+        /// <param name="healAmt"></param>
+        /// <param name="flyingSpeed"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="CD"></param>
+        public static void HealProj<T>(IEntitySource src, Vector2 pos, Player player, int healAmt, float flyingSpeed = 20f, float acceleration = 2.4f, int CD = 60) where T : ModProjectile
+        {
+            if (player.Soul().HealProjCD > 0)
+                return;
+            float randomAngleOffset = Main.rand.NextFloat(MathHelper.TwoPi);
+            Vector2 dire = new((float)Math.Cos(randomAngleOffset), (float)Math.Sin(randomAngleOffset));
+            float randomSpeed = Main.rand.NextFloat(12f, 16f);
+            Projectile.NewProjectile(src, pos, dire * randomSpeed, ModContent.ProjectileType<T>(), 0, 0f, player.whoAmI, flyingSpeed, acceleration, healAmt);
+            player.Soul().HealProjCD = CD;
         }
     }
 }

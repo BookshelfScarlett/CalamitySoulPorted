@@ -154,8 +154,6 @@ namespace CalamitySoulPorted.PlayerSoul
             // EmpyreanEnchDR();
             if (EnchTarragonToughness)
                 ToughnessCalculate(npc.damage, ref modifiers);
-            //直接乘以这个数
-            // modifiers.SourceDamage *= GetDirectlyDR;
         }
 
 
@@ -164,10 +162,10 @@ namespace CalamitySoulPorted.PlayerSoul
             // GodSlayerEnchDR();
             // EmpyreanEnchDR();
             if (EnchTarragonToughness)
-                ToughnessCalculate(proj.damage, ref modifiers);
-            //直接乘以这个数
-            // modifiers.SourceDamage *= GetDirectlyDR;
-            //计算完之后记得重置免伤数据
+            {
+                int actualDamage = proj.damage;
+                ToughnessCalculate(actualDamage, ref modifiers);
+            }
         }
         #region 龙蒿魔石盔甲韧性计算
         private void ToughnessCalculate(int damage, ref Player.HurtModifiers modifiers)
@@ -180,16 +178,17 @@ namespace CalamitySoulPorted.PlayerSoul
             {
                 if (dmg < 0)
                     continue;
-                
                 //将伤害表遍历进韧性衰减方法，伤害量越高，其韧性提供的伤害减免越强
                 float debugTough = TryCalToughness(dmg);
                 //获得一次韧性保护之后，直接将这个伤害乘以这个韧性并叠加
-                finalTaken += (int)(dmg * (1f - debugTough));
+                finalTaken += Math.Max(1, (int)(dmg * (1f - debugTough)));
             }
+            
+            int realShouldTake = ((damage - finalTaken) > 1).ToInt() * (damage - finalTaken);
             //最终承伤
-            modifiers.FinalDamage.Flat -= damage - finalTaken;
+            modifiers.FinalDamage.Flat -= realShouldTake;
         }
-        public float TryCalToughness(int damage)
+        public static float TryCalToughness(int damage)
         {
             //开始进行盔甲韧性的计算
             //最低趋近韧性：5%，最高趋近韧性：30%
@@ -197,38 +196,47 @@ namespace CalamitySoulPorted.PlayerSoul
             const float maxTough = TarragonEnchant.ArmorToughnessMax;
             //衰减系数：0.25%
             const float k = TarragonEnchant.ArmorToughnessReduceRate;
-            //计算实际韧性，玩家防御越高，韧性的衰减速度会越高
-            float tough = miniTough + (maxTough - miniTough) * (1 - (float)Math.Exp(-k * damage));
+            //计算实际韧性，承伤越低，韧性的衰减速度会越高
+            float scaledDamage = Math.Max(1, damage);
+            float tough = miniTough + (maxTough - miniTough) * (1 - (float)Math.Exp(-k * scaledDamage));
             //使结果不会低于最小值
-            return Math.Max(miniTough, tough);
+            return Math.Clamp(tough, miniTough, maxTough);
         }
+        //数学公式这一块，目前大概没问题了
         public static List<int> SeperateDamageList(int damage)
         {
+            //边界处理：伤害过小时直接返回原伤害（避免拆分）
+            int minSafeDamage = TarragonEnchant.DamageDivityRateMin * 2;
+            if (damage <= minSafeDamage)
+            {
+                return [damage];
+            }
             //获取随机值
             Random rand = new();
             //建空表
             List<int> list = [];
             int divityRateMin = TarragonEnchant.DamageDivityRateMin;
             int divityRateMax = TarragonEnchant.DamageDivityRateMax;
-            bool shouldBreakLoop = false;
-            while (!shouldBreakLoop)
+            //最大循环次数
+            int maxRetries = 25;
+            int retryTimes = 0;
+            while (retryTimes < maxRetries)
             {
                 //清理可能无效的结果
                 list.Clear();
-                shouldBreakLoop = true;
-                //依据随机值取传入进来的伤害的可能存在的最大数
+                retryTimes++;
+                //依据随机值取传入进来的伤害的可能存在的最大拆分数
                 int possbileMax = 1;
                 //可能是这里有问题（？
-                while (true)
-                {
-                    int possibleCount = possbileMax + 1;
-                    int minSum = TryCalMinSum(possbileMax, damage, divityRateMin);
-                    if (minSum > damage)
-                        break;
-                    possbileMax = possibleCount;
-                }
+                //获得最大拆分数
+                possbileMax = CalMaxPossbileSplit(damage, divityRateMin);
+                possbileMax = Math.Max(2, possbileMax);
+                //根据伤害大小设置拆分数量范围
+                int minCount = 2;
+                int maxCount = Math.Min(possbileMax, (int)(damage / (divityRateMin * 2f)));
+                maxCount = Math.Max(minCount, maxCount);
                 //择优录取（X）随机选择至少两个数
-                int count = rand.Next(2, possbileMax + 1);
+                int count = rand.Next(minCount, maxCount + 1);
                 //生成随机差值
                 int totalDiffer = 0;
                 int[] randDiffer = new int[count - 1];
@@ -256,19 +264,45 @@ namespace CalamitySoulPorted.PlayerSoul
                     //如果存在误差，将其直接给第一个数
                     list[0] += adjust;
                 }
-                //如果存在负数则重新生成
+                //查阅是否存在负数
+                bool allPositive = true;
                 foreach (int val in list)
                 {
                     if (val <= 0)
                     {
-                        shouldBreakLoop = false;
+                        allPositive = false;
                         break;
                     }
                 }
+                if (allPositive)
+                    break;
+            }
+            //极端情况：多次重试后仍无效，返回原伤害（避免崩溃）
+            if (list.Any(v => v <= 0) || list.Count == 0)
+            {
+                list.Clear();
+                list.Add(damage);
             }
             //将排序好的表单返回即可
             return list;
         }
+
+        private static int CalMaxPossbileSplit(int damage, int divityRateMin)
+        {
+            //基于等差数列去求可能存在的最大拆分数
+            int maxN = 1;
+            while (true)
+            {
+                //计算n+1时的最小理论总和
+                long minSum = (long)(maxN + 1) * maxN * divityRateMin/ 2;
+                if (minSum >= damage)
+                    break;
+                    
+                maxN++;
+            }
+            return maxN;
+        }
+
         //计算i个数字的最小可能总和（差值都取50）
         public static int TryCalMinSum(int i, int damage, int divityRateMin) => (damage * 2 + divityRateMin * (i - 1) * (i - 2)) / (2 * i);
         #endregion

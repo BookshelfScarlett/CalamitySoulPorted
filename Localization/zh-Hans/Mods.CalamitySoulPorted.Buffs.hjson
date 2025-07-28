@@ -12,3 +12,8 @@ EnchStatigelDamageBuff: {
 	// DisplayName: Ench Statigel Damage Buff
 	// Description: Mods.CalamitySoulPorted.Buffs.EnchStatigelDamageBuff.Description
 }
+
+EnchBloodflareOverSatuBuff: {
+	// DisplayName: Ench Bloodflare Over Satu Buff
+	// Description: Mods.CalamitySoulPorted.Buffs.EnchBloodflareOverSatuBuff.Description
+}
