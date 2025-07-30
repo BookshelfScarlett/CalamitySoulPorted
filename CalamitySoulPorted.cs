@@ -9,6 +9,7 @@ using CalamityMod.Tiles.Ores;
 using CalamitySoulPorted.ItemNew;
 using CalamitySoulPorted.ItemNew.Accessories.CalamityModify;
 using CalamitySoulPorted.ItemNew.Accessories.CalamityModify.FuckCalamityRogue;
+using CalamitySoulPorted.SoulMethods;
 using CalamitySoulPorted.SoulTile;
 using CalamitySoulPorted.SoulTile.AutoSmeltList;
 using Terraria;
@@ -21,10 +22,14 @@ namespace CalamitySoulPorted
 	public class CalamitySoulPorted : Mod
 	{
 		public static Mod Calamity => ModLoader.GetMod("CalamityMod");
+		//灾劫你妈死了吧谁jb让你藏dll啊
+		public static Mod Catalyst;
 		//熵联动相关
-		public static Mod Entropy => ModLoader.GetMod("CalamityEntropy");
+		public static Mod Entropy;
 		//灾厄遗产联动相关
-		public static Mod Inhertiance => ModLoader.GetMod("CalamityInhertiance");
+		public static Mod Inhertiance;
+		//旧神之猎相关
+		public static Mod Hunt;
 
 
 
@@ -33,12 +38,36 @@ namespace CalamitySoulPorted
         private static CalamitySoulPorted instance;
         public override void Load()
 		{
+			Instance = this;
 			FuckRecipeHooks();
-			FuckCalamityStealthRogue();
+            FuckCalamityStealthRogue();
+            LoadCrossMod();
 			base.Load();
 		}
 
-        private void FuckCalamityStealthRogue()
+		private static void LoadCrossMod()
+		{
+			Mod[] mods =
+			[
+				Catalyst,
+				Entropy,
+				Inhertiance,
+				Hunt
+			];
+			//just in case
+			for (int i = 0; i < mods.Length; i++)
+			{
+				mods[i] = null;
+			}
+
+			ModLoader.TryGetMod("CalamityEntropy", out Entropy);
+			ModLoader.TryGetMod("CalamityHunt", out Hunt);
+			ModLoader.TryGetMod("CatalystMod", out Catalyst);
+			ModLoader.TryGetMod("CalamityInheritance", out Inhertiance);
+        }
+
+        #region 我已经重做了14个饰品了，灾厄你怎么回事？
+        private static void FuckCalamityStealthRogue()
         {
 			//灾厄日蚀魔镜
 			ReworkEclipseMirror.Load();
@@ -56,7 +85,7 @@ namespace CalamitySoulPorted
 			ReworkSilenceSheath.Load();
         }
 
-        public static void FuckRecipeHooks()
+		public static void FuckRecipeHooks()
 		{
 			//灾厄核子之源
 			ReworkNucleogenesis.Load();
@@ -66,7 +95,19 @@ namespace CalamitySoulPorted
 			ReworkElementalQuiver.Load();
 			//灾厄空灵护符
 			ReworkEtherealTalisman.Load();
+			//灾厄海绵
+			ReworkSponge.Load();
+			//灾厄血杯
+			ReworkChaliceGod.Load();
+			//灾厄壁垒
+			ReworkRampart.Load();
+			//灾厄神圣护符
+			ReworkAmulet.Load();
+			//灾厄晋升证章
+			ReworkAscendant.Load();
+			ReworkTracersElysian.Load();
 		}
+		#endregion
         public override void PostSetupContent()
         {
 			//首先刷新一次表单
@@ -96,8 +137,21 @@ namespace CalamitySoulPorted
 				SmeltList.AddOres(Tile<AuricOre>(), Item<AuricBar>());
 
 				#endregion
-				//TODO: 这里要几把加一个灾劫的星凝矿😅
+				//TODO: 这里要几把加一个灾劫的星凝矿😅，灾熵的Void Bar
 
+				if (Entropy != null)
+				{
+					ModTile voidOreTile = Entropy.TryFindBetter<ModTile>("VoidOreTile");
+					ModItem voidBarItem = Entropy.TryFindBetter<ModItem>("VoidBar");
+					SmeltList.AddOres(voidOreTile.Type, voidBarItem.Type);
+
+				}
+				if (Catalyst != null)
+				{
+					ModTile catalystOreTile = Catalyst.TryFindBetter<ModTile>("MetanovaOre");
+					ModItem catalystBarItem = Catalyst.TryFindBetter<ModItem>("MetanovaBar");
+					SmeltList.AddOres(catalystOreTile.Type, catalystBarItem.Type);
+				}
 			}
         }
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -128,9 +182,27 @@ namespace CalamitySoulPorted
 		public override void Unload()
 		{
 			Instance = null;
+			UnLoadCrossMod();
 			base.Unload();
 		}
-		public static int Tile<T>() where T : ModTile => ModContent.TileType<T>();
+
+        private void UnLoadCrossMod()
+		{
+			Mod[] mods =
+			[
+				Catalyst,
+				Entropy,
+				Inhertiance,
+				Hunt
+			];
+			//just in case
+			for (int i = 0; i < mods.Length; i++)
+			{
+				mods[i] = null;
+			}
+        }
+
+        public static int Tile<T>() where T : ModTile => ModContent.TileType<T>();
 		public static int Item<T>() where T : ModItem => ModContent.ItemType<T>();
 	}
 }

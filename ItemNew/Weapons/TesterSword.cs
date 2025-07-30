@@ -1,6 +1,8 @@
 using CalamitySoulPorted.BuffsPoted;
 using CalamitySoulPorted.ItemsPorted.Enchs.PostML;
 using CalamitySoulPorted.SoulMethods;
+using CalamitySoulPorted.SoulTile.AutoSmeltList;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -47,12 +49,12 @@ namespace CalamitySoulPorted.ItemNew.Weapons
             #region 自裁
             if (player.itemAnimation == player.itemAnimationMax)
             {
-                player.Hurt(PlayerDeathReason.ByCustomReason($"{player.name}！不要自杀！"), Main.rand.Next(140, 400), 0);
-                player.AddBuff<EnchBloodflareOverSatuBuff>(BloodflareEnchant.OverSaturationTime * 60);
-            }
-            else if (player.altFunctionUse == 2)
-            {
-                player.HandlePotionSick();
+                // player.Hurt(PlayerDeathReason.ByCustomReason($"{player.name}！不要自杀！"), Main.rand.Next(200, 400), 0);
+                for (int i = 0; i < SmeltList.BarType.Count; i++)
+                {
+                    Item.NewItem(player.GetSource_FromThis(), player.Hitbox, SmeltList.BarType[i]);
+                    
+                }
             }
             #endregion
             return base.UseItem(player);

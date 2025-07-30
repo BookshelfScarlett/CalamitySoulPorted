@@ -53,7 +53,6 @@ namespace CalamitySoulPorted.SoulMethods
         /// <returns></returns>
         public static void HandlePotionSick(this Player player, int time = 0, bool shouldGivePotionSick = false)
         {
-            player.potionDelayTime = time;
             player.potionDelay = time;
             if (shouldGivePotionSick)
             {
@@ -94,5 +93,11 @@ namespace CalamitySoulPorted.SoulMethods
                 proj.velocity *= 0.90f;
             }
         }
+        /// <summary>
+        /// 懒得打了，直接调吧吧
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        public static bool IsFullHP(this Player player) => player.statLife == player.statLifeMax2;
     }
 }

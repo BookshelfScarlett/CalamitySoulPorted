@@ -34,8 +34,11 @@ namespace CalamitySoulPorted.PlayerSoul
         public bool EnchAncientGodSlayerRebornDodge = true;
         //天蓝魔石Jumping效果的CD
         public int EnchAeroJumpingEffect = 0;
+        //血炎魔石的治疗量降低
+        public int EnchBloodflareReducedHealing = 0;
         //血炎魔石的保底治疗
         public int EnchBloodflareCurChance = 0;
+        public int EnchBFInnerCD = 0;
         //全局射弹CD
         public int HealProjCD = 0;
         public void EnchCounters()
@@ -71,6 +74,11 @@ namespace CalamitySoulPorted.PlayerSoul
             //天蓝Jumping 
             if (EnchAeroJumpingEffect > 0)
                 EnchAeroJumpingEffect--;
+            if (!Player.HasBuff<EnchBloodflareOverSatuBuff>())
+                EnchBloodflareReducedHealing = 0;
+            if (EnchBFInnerCD > 0)
+                EnchBFInnerCD--;
+                
             if (HealProjCD > 0)
                 HealProjCD--;
         

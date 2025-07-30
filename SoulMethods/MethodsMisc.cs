@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Reflection;
 using CalamityMod;
 using CalamityMod.Projectiles.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CalamitySoulPorted.SoulMethods
 {
@@ -96,5 +99,45 @@ namespace CalamitySoulPorted.SoulMethods
             }
             return flag;
         }
+        /// <summary>
+        /// 获取指定类型中指定名称的方法信息
+        /// </summary>
+        /// <typeparam name="T">目标类型</typeparam>
+        /// <param name="methodName">方法名称</param>
+        /// <returns>方法信息，如果找不到则返回null</returns>
+        public static MethodInfo GetMethod<T>(this string methodName)
+        {
+            return typeof(T).GetMethod(methodName);
+        }
+        /// <summary>
+        /// 重载方法
+        /// </summary>
+        public static MethodInfo GetMethod<T>(this string methodName, Type[] paramTypes)
+        {
+            return typeof(T).GetMethod(methodName, paramTypes);
+        }
+        /// <summary>
+        /// 快速挂钩子，结合上方的获取钩子方法用
+        /// </summary>
+        /// <typeparam name="T">目标类型</typeparam>
+        /// <param name="methodName">方法名称param>
+        /// <param name="hookName">需要挂的钩钩子名/param>
+        public static void QuickHook<T>(this string methodName, Delegate hookName)
+        {
+            MethodInfo getMethod = methodName.GetMethod<T>();
+            MonoModHooks.Add(getMethod, hookName);
+        }
+        public static void QuickHook<T>(this string methodName, Delegate hookName, Type[] paramTypes)
+        {
+            MethodInfo getMethod = methodName.GetMethod<T>(paramTypes);
+            MonoModHooks.Add(getMethod, hookName);
+        }
+        /// <summary>
+        /// CD是否转好，懒了打了
+        /// </summary>
+        /// <param name="counter"></param>
+        /// <returns></returns>
+        public static bool IsDone(this int counter) => counter == 0;
+        public static bool IsLoad(this Mod mod) => mod != null;
     }
 }

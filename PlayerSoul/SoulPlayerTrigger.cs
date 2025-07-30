@@ -1,5 +1,6 @@
 using System;
 using CalamitySoulPorted.BuffsPoted;
+using CalamitySoulPorted.ItemsPorted.Enchs.PostML;
 using CalamitySoulPorted.SoulBuildUp;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
@@ -27,7 +28,20 @@ namespace CalamitySoulPorted.PlayerSoul
             //弑神魔石大冲。
             GodSlayerEnchantDashTrigger(triggersSet);
             AerospecEnchantJump(triggersSet);
-            base.ProcessTriggers(triggersSet);
+            if (EnchBloodflareOverSatu)
+            {
+                if (PlayerInput.Triggers.JustPressed.QuickHeal && !Player.IsFullHP())
+                {
+                    bool isGrantedBuff = Player.HasBuff<EnchBloodflareOverSatuBuff>();
+                    if (!isGrantedBuff)
+                    {
+                        Player.AddBuff<EnchBloodflareOverSatuBuff>(BloodflareEnchant.OverSaturationTime.IntToFrames());
+                        Player.HandlePotionSick();
+                    }
+                    else
+                        EnchBloodflareReducedHealing += 1;
+                }
+            }
         }
 
         private void AerospecEnchantJump(TriggersSet triggersSet)

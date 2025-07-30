@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Accessories.Wings;
+using CalamitySoulPorted.ItemNew.Accessories.CalamityModify.FuckCalamityRogue;
 using CalamitySoulPorted.SoulMethods;
 using Terraria;
 using Terraria.Localization;
@@ -29,10 +31,21 @@ namespace CalamitySoulPorted.ItemNew
             }
             if (entity.Same<CoinofDeceit>())
                 entity.defense = 3;
+
             if (entity.Same<RuinMedallion>())
                 entity.defense = 5;
+
+            if (entity.Same<ChaliceOfTheBloodGod>())
+                entity.defense = 10;
+
+            if (entity.Same<TheSponge>())
+                entity.defense = 10;
+
             if (entity.Same<DarkMatterSheath>())
                 entity.defense = 8;
+
+            if (entity.Same<RampartofDeities>())
+                entity.defense = 16;
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
@@ -77,12 +90,27 @@ namespace CalamitySoulPorted.ItemNew
 
             if (item.Same<CoinofDeceit>())
                 tooltips.FuckThisTooltipAndRewrote(thisLocal + "CoinofDeceitRework");
-                
+
             if (item.Same<MirageMirror>())
                 tooltips.FuckThisTooltipAndRewrote(thisLocal + "MirageMirrorRework");
 
             if (item.Same<AbyssalMirror>())
                 tooltips.FuckThisTooltipAndRewrote(thisLocal + "AbyssalMirrorRework");
+
+            if (item.Same<ChaliceOfTheBloodGod>())
+                tooltips.FuckThisTooltipAndRewrote(thisLocal + "ChaliceRework");
+
+            if (item.Same<RampartofDeities>())
+                tooltips.FuckThisTooltipAndRewrote(thisLocal + "RampartRework");
+
+            if (item.Same<DeificAmulet>())
+                tooltips.FuckThisTooltipAndRewrote(thisLocal + "DeificRework");
+
+            if (item.Same<AscendantInsignia>())
+                tooltips.FuckThisTooltipAndRewrote(thisLocal + "AscendantRework");
+
+            if (item.Same<TracersElysian>())
+                tooltips.FuckThisTooltipAndRewrote(thisLocal + "ElysianTracers");
         }
 
         public override void UpdateAccessory(Item item, Player p, bool hideVisual)

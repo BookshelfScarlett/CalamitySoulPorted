@@ -38,6 +38,22 @@ namespace CalamitySoulPorted.ItemNew.Accessories.Prestige
         }
         public override void AddRecipes()
         {
+            if (CalamitySoulPorted.Inhertiance.IsLoad())
+            {
+                CreateRecipe().
+                AddIngredient(ItemID.WarriorEmblem).
+                AddIngredient(ItemID.FireGauntlet).
+                AddRecipeGroup(SoulRecpieGroupID.TerraBlade).
+                AddRecipeGroup(SoulRecpieGroupID.ElementalShiv).
+                AddRecipeGroup(SoulRecpieGroupID.ElementalLance).
+                AddIngredient(ItemID.Flairon).
+                AddIngredient<StellarContempt>().
+                AddIngredient(ItemID.Terrarian).
+                AddIngredient(ItemID.LunarBar, 15).
+                AddTile(TileID.LunarCraftingStation).
+                Register();
+            }
+            else
             CreateRecipe().
                 AddIngredient(ItemID.WarriorEmblem).
                 AddIngredient(ItemID.FireGauntlet).

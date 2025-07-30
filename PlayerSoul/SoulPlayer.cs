@@ -100,6 +100,7 @@ namespace CalamitySoulPorted.PlayerSoul
         public int MirrorLevel = 0;
         //刀鞘等级
         public int SheathLevel = 0;
+        public bool InfiniteFlightPower = false;
         #endregion
         
         public override void PreUpdate()
@@ -299,6 +300,7 @@ namespace CalamitySoulPorted.PlayerSoul
             GuarrantedPrestige = false;
             MirrorLevel = 0;
             SheathLevel = 0;
+            InfiniteFlightPower = false;
         }
         //死亡时重置
         public override void UpdateDead()

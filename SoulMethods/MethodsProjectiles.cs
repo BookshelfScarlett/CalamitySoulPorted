@@ -214,14 +214,19 @@ namespace CalamitySoulPorted.SoulMethods
         /// <param name="flyingSpeed"></param>
         /// <param name="acceleration"></param>
         /// <param name="CD"></param>
-        public static void HealProj<T>(IEntitySource src, Vector2 pos, Player player, int healAmt, float flyingSpeed = 20f, float acceleration = 2.4f, int CD = 60) where T : ModProjectile
+        public static void HealProj<T>(IEntitySource src, Vector2 pos, Player player, int healAmt, float flyingSpeed = 20f, float acceleration = 2.4f, int CD = 60, int spawnCounts = 1, int eu = 1) where T : ModProjectile
         {
             if (player.Soul().HealProjCD > 0)
                 return;
-            float randomAngleOffset = Main.rand.NextFloat(MathHelper.TwoPi);
-            Vector2 dire = new((float)Math.Cos(randomAngleOffset), (float)Math.Sin(randomAngleOffset));
-            float randomSpeed = Main.rand.NextFloat(12f, 16f);
-            Projectile.NewProjectile(src, pos, dire * randomSpeed, ModContent.ProjectileType<T>(), 0, 0f, player.whoAmI, flyingSpeed, acceleration, healAmt);
+            
+            for (int i = 0; i < spawnCounts; i++)
+            {
+                float randomAngleOffset = Main.rand.NextFloat(MathHelper.TwoPi);
+                Vector2 dire = new((float)Math.Cos(randomAngleOffset), (float)Math.Sin(randomAngleOffset));
+                float randomSpeed = Main.rand.NextFloat(12f, 16f);
+                int p = Projectile.NewProjectile(src, pos, dire * randomSpeed, ModContent.ProjectileType<T>(), 0, 0f, player.whoAmI, flyingSpeed, acceleration, healAmt);
+                Main.projectile[p].extraUpdates = eu;
+            }
             player.Soul().HealProjCD = CD;
         }
     }

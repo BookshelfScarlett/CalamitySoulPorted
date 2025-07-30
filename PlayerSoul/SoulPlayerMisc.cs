@@ -36,7 +36,18 @@ namespace CalamitySoulPorted.PlayerSoul
             CustomSpeedUpdate();
             EffectRelatedOnNPC();
             //血炎魔石的过饱和
-            HandlePotionSickForEnchBF();
+            // HandlePotionSickForEnchBF();
+            //专门处理无限飞行时间用。因为可能后续在相关boss上做手脚
+            HandleInfiniteFlight();
+        }
+
+        public void HandleInfiniteFlight()
+        {
+
+            if (!InfiniteFlightPower)
+                return;
+
+            Player.Calamity().infiniteFlight = true;
             
         }
 
@@ -126,6 +137,10 @@ namespace CalamitySoulPorted.PlayerSoul
             {
                 EnchTarragonToughness = true;
                 Player.noKnockback = true;
+            }
+            if (EnchBloodflare)
+            {
+                EnchBloodflareOverSatu = true;
             }
 
             #region 林海相关

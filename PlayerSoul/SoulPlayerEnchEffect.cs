@@ -23,17 +23,12 @@ namespace CalamitySoulPorted.PlayerSoul
         //血炎饱和治疗
         public void HandleBloodflareGetHeal(Item item, bool quickHeal, ref int healValue)
         {
-            if (!EnchBloodflareOverSatu)
+            if (!EnchBloodflareOverSatu && !quickHeal)
                 return;
             
             bool hasOverSatu = Player.HasBuff<EnchBloodflareOverSatuBuff>();
             if (hasOverSatu)
             {
-
-                if (!quickHeal)
-                    return;
-
-                Main.NewText("GetHealingHandle", Color.Red);
                 int healAmt = (int)(item.healLife * Player.Calamity().healingPotionMultiplier);
                 CalculateOverHeal(healAmt, ref healValue);
                 Player.HandlePotionSick();
@@ -45,26 +40,34 @@ namespace CalamitySoulPorted.PlayerSoul
         {
             if (!EnchBloodflareOverSatu)
                 return;
-            if (!Player.HasBuff<EnchBloodflareOverSatuBuff>() && PlayerInput.Triggers.JustPressed.QuickHeal)
+            if (PlayerInput.Triggers.JustPressed.QuickHeal)
             {
+                bool isGrantedBuff = Player.HasBuff<EnchBloodflareOverSatuBuff>();
+                if (!isGrantedBuff)
+                {
+                    Player.HandlePotionSick();
+                }
+                //只有玩家低于最大生命值时才能正常降低治疗量，避免某些人都满生命值了还狂按H结果后续只能吃1血
+                else if (Player.statLife < Player.statLifeMax2 && EnchBFInnerCD.IsDone())
+                    EnchBloodflareReducedHealing += 1 * isGrantedBuff.ToInt();
+                //经过60帧时才判定增加
                 Player.AddBuff<EnchBloodflareOverSatuBuff>(BloodflareEnchant.OverSaturationTime.IntToFrames());
-                Player.HandlePotionSick();
+                EnchBFInnerCD = 60;
             }
-            Main.NewText("MiscEffectHandle", Color.Red);
         }
         private void CalculateOverHeal(int healAmt, ref int finalValue)
         {
             int shouldHeal = healAmt;
             //先减去这个值
-            shouldHeal -= BloodflareEnchant.MinusHealAmount;
+            shouldHeal -= BloodflareEnchant.MinusHealAmount * (1 + EnchBloodflareReducedHealing);
             if (shouldHeal <= 0)
             {
                 finalValue = BloodflareEnchant.MininumHealAmount;
                 return;
             }
+
             //每次遍历这个循环时，都会在这个治疗量上不断削减
-            //标记他
-            EnchBloodFlareIsDoneSatu = true;
+            //治疗次数 + 1
             finalValue = shouldHeal;
 
         }
@@ -74,10 +77,16 @@ namespace CalamitySoulPorted.PlayerSoul
         }
         private void EffectBloodflareEnchDrain(NPC target, NPC.HitInfo hit)
         {
+            if (!EnchBloodflare)
+                return;
+                
             if (Main.rand.Next(BloodflareEnchant.SpawnHealingChance) - EnchBloodflareCurChance <= 0)
             {
                 SoundEngine.PlaySound(SoundID.Item103, target.Center);
-                SoulMethod.HealProj<EnchBloodflareHealing>(target.GetSource_FromThis(), target.Center, Player, 20, CD: 60);
+                int basicHeal = 20;
+                int spawnCounts = 5;
+                int healPerProj = basicHeal / spawnCounts;
+                SoulMethod.HealProj<EnchBloodflareHealing>(target.GetSource_FromThis(), target.Center, Player, healPerProj, CD: 60, spawnCounts: 5, eu: 2);
                 EnchBloodflareCurChance = 0;
             }
             else

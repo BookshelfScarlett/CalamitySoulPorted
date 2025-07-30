@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Security;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Aerospec;
 using CalamityMod.Items.Armor.Auric;
 using CalamityMod.Items.Armor.Bloodflare;
@@ -42,8 +44,16 @@ namespace CalamitySoulPorted.SoulMethods
         public static RecipeGroup TerraBlade;
         public static RecipeGroup ElementalShiv;
         public static RecipeGroup StellarContempt;
+        public static RecipeGroup BYDGoozmaWDNMD;
         #endregion
+        #region 灾厄遗产怎么这么多东西？
+        public static RecipeGroup ElemMelee;
+        public static RecipeGroup ElemRanged;
+        public static RecipeGroup ElemMagic;
+        public static RecipeGroup ElemSummon;
+        public static RecipeGroup ElemRogue;
 
+        #endregion
         #region Others
         public static RecipeGroup EvilBars;
         #endregion
@@ -72,10 +82,19 @@ namespace CalamitySoulPorted.SoulMethods
                 TerraBlade,
                 StellarContempt,
 
-                EvilBars
+                EvilBars,
+                BYDGoozmaWDNMD
             ];
             for (int i = 0; i < Train.Length; i++)
                 Train[i] = null;
+            RecipeGroup[] inhertiance =
+            [
+                ElemMelee,
+                ElemRanged,
+                ElemMagic,
+                ElemSummon,
+                ElemRogue
+            ];
         }
         public override void AddRecipeGroups()
         {
@@ -126,19 +145,52 @@ namespace CalamitySoulPorted.SoulMethods
 
 
             #region 模组联动
-            bool isEnableInheritance = ModLoader.TryGetMod("CalamityInheritance", out Mod inheritance);
-            if (isEnableInheritance)
-                DoInheritanceGroup(inheritance);
+            if (CalamitySoulPorted.Inhertiance != null)
+                DoInheritanceGroup(CalamitySoulPorted.Inhertiance);
+            if (CalamitySoulPorted.Hunt != null)
+                DoHunt(CalamitySoulPorted.Hunt);
 
             #endregion
         }
 
+        public static void DoHunt(Mod hunt)
+        {
+            int bag1 = hunt.TryFindBetter<ModItem>("TreasureTrunk").Type;
+            int bag2 = hunt.TryFindBetter<ModItem>("TreasureBucket").Type;
+            BYDGoozmaWDNMD = InstallGroup(bag1, bag1, bag2);
+            BYDGoozmaWDNMD.NameHelperGroup("FuckingGoozma");
+        }
+
         public void DoInheritanceGroup(Mod inheritance)
         {
-            //注册泰拉刃的合成表。这里需要补充一个泰拉边锋
-            TerraBlade = InstallGroup(ItemID.TerraBlade, QuickCrossItem(inheritance, "TerraEdge"));
-            ElementalShiv = InstallGroup<ElementalShiv>(QuickCrossItem(inheritance, "ElementalShivold"));
-            StellarContempt = InstallGroup<StellarContempt>(QuickCrossItem(inheritance, "MeleeTypeHammerStellarContemptLegacy"));
+            //注册泰拉边锋
+            int terraEdge = inheritance.TryFindBetter<ModItem>("TerraEdge").Type;
+            //注册元素短剑
+            int eleShiv = inheritance.TryFindBetter<ModItem>("ElementalShivold").Type;
+            //注册锤子
+            int stellarHammer = inheritance.TryFindBetter<ModItem>("MeleeTypeHammerStellarContemptLegacy").Type;
+            #region 遗产怎么这么多饰品？
+            int EGlove = inheritance.TryFindModItem("ElementalGauntletold").Type;
+            int EQuiver = inheritance.TryFindModItem("ElementalQuiver").Type;
+            int ETalisman = inheritance.TryFindModItem("AncientEtherealTalisman").Type;
+            int Enucler = inheritance.TryFindModItem("NucleogenesisLegacy").Type;
+            int EMirror = inheritance.TryFindModItem("EclispeMirrorLegacy").Type;
+            ElemMelee = InstallGroup<ElementalGauntlet>(Item<ElementalGauntlet>(), EGlove);
+            ElemRanged = InstallGroup<ElementalQuiver>(Item<ElementalQuiver>(), EQuiver);
+            ElemMagic = InstallGroup<EtherealTalisman>(Item<EtherealTalisman>(), ETalisman);
+            ElemSummon = InstallGroup<Nucleogenesis>(Item<Nucleogenesis>(), Enucler);
+            ElemRogue = InstallGroup<EclipseMirror>(Item<EclipseMirror>(), EMirror);
+
+            ElemMelee.NameHelperGroup("ElementalGauntlet");
+            ElemRanged.NameHelperGroup("ElementalQuiver");
+            ElemMagic.NameHelperGroup("EtherealTalisman");
+            ElemSummon.NameHelperGroup("Nucleogenesis");
+            ElemRogue.NameHelperGroup("EclipseMirror");
+
+            #endregion
+            TerraBlade = InstallGroup(ItemID.TerraBlade, ItemID.TerraBlade, terraEdge);
+            ElementalShiv = InstallGroup<ElementalShiv>(Item<ElementalShiv>(), eleShiv);
+            StellarContempt = InstallGroup<StellarContempt>(Item<StellarContempt>(), stellarHammer);
             //注册名字
             TerraBlade.NameHelperGroup("TerraBladeCrossMod");
             ElementalShiv.NameHelperGroup("ElementalShivCrossMod");
@@ -170,7 +222,14 @@ namespace CalamitySoulPorted.SoulMethods
         public static string TrophyLA => "TrophyLA".GetNameGroup();
         public static string TrophyExoTwin => "TrophyExoTwin".GetNameGroup();
         public static string EvilBars => "EvilBars".GetNameGroup();
-        
+        public static string FuckingGoozma => "FuckingGoozma".GetNameGroup();
 
+        #region 遗产饰品，怎么这么多的？
+        public static string ElementalGauntlet => "ElementalGauntlet".GetNameGroup();
+        public static string ElementalQuiver => "ElementalQuiver".GetNameGroup();
+        public static string EtherealTalisman => "EtherealTalisman".GetNameGroup();
+        public static string Nucleogenesis => "Nucleogenesis".GetNameGroup();
+        public static string EclipseMirror => "EclipseMirror".GetNameGroup();
+        #endregion
     }
 }
