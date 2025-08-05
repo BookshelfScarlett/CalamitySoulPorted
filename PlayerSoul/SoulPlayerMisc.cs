@@ -24,7 +24,6 @@ namespace CalamitySoulPorted.PlayerSoul
         public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
         {
             HandleBloodflareGetHeal(item, quickHeal, ref healValue);
-            base.GetHealLife(item, quickHeal, ref healValue);
         }
         
         public override void PostUpdateMiscEffects()
@@ -35,8 +34,6 @@ namespace CalamitySoulPorted.PlayerSoul
             AccessoriesBuff();
             CustomSpeedUpdate();
             EffectRelatedOnNPC();
-            //血炎魔石的过饱和
-            // HandlePotionSickForEnchBF();
             //专门处理无限飞行时间用。因为可能后续在相关boss上做手脚
             HandleInfiniteFlight();
         }
@@ -142,45 +139,17 @@ namespace CalamitySoulPorted.PlayerSoul
             {
                 EnchBloodflareOverSatu = true;
             }
+            if (EnchAuricTesla)
+            {
+                EnchAuricClearBullet = true;
+            }
+            if (EnchOldHunter)
+                EnchOldHunterSize = true;
 
             #region 林海相关
             //林海自起
-            if (IsUsedEnchSilvaReborn && EnchSilvaRebornCounter > 0)
-            {
-                //下跑Counter
-                if (EnchSilvaRebornCounter > 0)
-                    EnchSilvaRebornCounter--;
-                //免疫灾厄提供的Debuff清单
-                foreach (int debuff in CalamityLists.debuffList)
-                    Player.buffImmune[debuff] = true;
-                //补置零效果
-                if (Player.lifeRegen < 1)
-                    Player.lifeRegen = 1;
-                //粒子
-                EnchSilvaDust();
-                //Counter结束，给CD
-                if (EnchSilvaRebornCounter <= 0)
-                {
-                    SoundEngine.PlaySound(SilvaHeadSummon.DispelSound, Player.Center);
-                    Player.AddCooldown(SilvaRevive.ID, CalamityUtils.SecondsToFrames(5));
-                }
-            }
-            //CD结束，重置林海自起
-            if (!Player.HasCooldown(SilvaRevive.ID) && IsUsedEnchSilvaReborn && EnchSilvaRebornCounter <= 0)
-            {
-                EnchSilvaRebornCounter = EnchSilvaRebornDuration;
-                IsUsedEnchSilvaReborn = false;
-            }
-            //林海强起
-            if (EnchSilva && EnchSilvaForceHealCounter > 0)
-            {
-                EnchSilvaForceHealCounter--;
-                if (Player.statLife < Player.statLifeMax2 - 50)
-                {
-                    Player.statLife += 5;
-                    Player.HealEffect(5);
-                }
-            }
+            EnchSilvaRegen();
+            
             #endregion
             //日影魔石将会重置
             if (EnchUmbraphile)
@@ -212,23 +181,6 @@ namespace CalamitySoulPorted.PlayerSoul
             //合成岩建筑师：自动熔炼
             if (EnchMarniteArchitect)
                 EnchMarniteArchAutoSmelt = true;
-        }
-
-        public void EnchSilvaDust()
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Chlorophyte, 0f, 0f, 100, new Color(Main.DiscoR, 203, 103), 2f);
-                Main.dust[d].position.X += Main.rand.Next(-20, 21);
-                Main.dust[d].position.Y += Main.rand.Next(-20, 21);
-                Main.dust[d].velocity *= 0.9f;
-                Main.dust[d].noGravity = true;
-                Main.dust[d].scale *= 1f + Main.rand.Next(40) * 0.01f;
-                Main.dust[d].shader = GameShaders.Armor.GetSecondaryShader(Player.ArmorSetDye(), Player);
-                if (Main.rand.NextBool())
-                    Main.dust[d].scale *= 1f + Main.rand.Next(40) * 0.01f;
-
-            }
         }
 
         public void CustomSpeedUpdate()

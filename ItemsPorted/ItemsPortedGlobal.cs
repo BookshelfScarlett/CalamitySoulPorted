@@ -1,6 +1,8 @@
 using System;
 using CalamityMod;
 using CalamityMod.Projectiles.Magic;
+using CalamitySoulPorted.ItemsPorted.Enchs.PreHM;
+using CalamitySoulPorted.PlayerSoul;
 using CalamitySoulPorted.SoulMethods;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -13,6 +15,22 @@ namespace CalamitySoulPorted.ItemsPorted
     public class SoulGlobalItem : GlobalItem
     {
         public override bool InstancePerEntity => true;
+        public override void ModifyItemScale(Item item, Player player, ref float scale)
+        {
+            SoulPlayer sPlayer = player.Soul();
+            if (sPlayer.EnchOldHunterSize)
+                SizeBuffer(item, player, ref scale);
+        }
+
+        public static void SizeBuffer(Item item, Player player, ref float scale)
+        {
+            if (!item.IsAir && item.CheckedIsWeapon() && !item.noMelee)
+            {
+                //250%倍率
+                scale *= OldHunterEnchant.Size;
+            }
+        }
+
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 

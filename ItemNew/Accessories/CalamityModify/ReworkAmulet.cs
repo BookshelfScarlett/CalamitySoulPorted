@@ -1,12 +1,8 @@
 using System.Reflection;
 using CalamityMod;
-using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using CalamitySoulPorted.SoulMethods;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,12 +13,17 @@ namespace CalamitySoulPorted.ItemNew.Accessories.CalamityModify
     {
         public static void Load()
         {
+            NewMethod();
+        }
+
+        private static void NewMethod()
+        {
             MethodInfo fuckRecipe = typeof(DeificAmulet).GetMethod(nameof(DeificAmulet.AddRecipes));
             MethodInfo fuckUpdate = typeof(DeificAmulet).GetMethod(nameof(DeificAmulet.UpdateAccessory));
             MonoModHooks.Add(fuckRecipe, FuckRecipe_Hook);
             MonoModHooks.Add(fuckUpdate, FuckUpdateAcc_Hook);
         }
-    
+
         public static void FuckUpdateAcc_Hook(DeificAmulet self, Player player, bool hideVisual)
         {
             //仍然获得原灾的效果

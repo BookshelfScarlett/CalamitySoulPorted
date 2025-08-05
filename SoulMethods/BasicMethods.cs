@@ -3,6 +3,7 @@ using System.Data;
 using CalamityMod;
 using CalamityMod.NPCs.ExoMechs.Ares;
 using CalamityMod.NPCs.SlimeGod;
+using CalamitySoulPorted.ItemNew;
 using CalamitySoulPorted.ItemsPorted;
 using CalamitySoulPorted.PlayerSoul;
 using CalamitySoulPorted.SoulProjectiles;
@@ -101,6 +102,18 @@ namespace CalamitySoulPorted.SoulMethods
             if (mod.TryFind(wantedNPCName, out ModNPC npcID))
                 return npcID;
             else return null;
+        }
+        public static bool CheckedIsWeapon(this Item item, bool includedTools = false)
+        {
+            //BYD钱币枪！！！！
+            bool isWeapon = (item.damage > 0 && item.pick == 0 && item.axe == 0 && item.hammer == 0) || item.Same(ItemID.CoinGun);
+            if (includedTools)
+            {
+                return item.damage > 0 || item.Same(ItemID.CoinGun);
+            }
+            else
+                return isWeapon;
+
         }
     }
 

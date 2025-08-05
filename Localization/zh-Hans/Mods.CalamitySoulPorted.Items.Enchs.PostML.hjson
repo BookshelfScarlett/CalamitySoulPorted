@@ -93,3 +93,8 @@ TarragonEnchant: {
 		「古树之灵的棘皮护甲」
 		'''
 }
+
+ExoEnchant: {
+	// DisplayName: Exo Enchant
+	// Tooltip: ""
+}

@@ -8,6 +8,8 @@ namespace CalamitySoulPorted.SoulCrossModModify.CalamityHunt
     {
         public override void SetStaticDefaults()
         {
+            if (Hunt == null)
+                return;
             if (Hunt.TryFind("ShogunHelm", out ModItem shogunHelmet) && Hunt.TryFind("ShogunChestplate", out ModItem shogunChest) && Hunt.TryFind("ShogunPants", out ModItem shogunPants))
             {
                 ItemID.Sets.ShimmerTransformToItem[shogunHelmet.Type] = ModContent.ItemType<AuricBar>();

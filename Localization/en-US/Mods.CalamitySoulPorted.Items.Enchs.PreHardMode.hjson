@@ -47,5 +47,9 @@ WulfrumEnchant: {
 
 OldHunterEnchant: {
 	DisplayName: Old Hunter Enchant
-	Tooltip: ""
+	Tooltip:
+		'''
+		Prowler
+		{0}
+		'''
 }

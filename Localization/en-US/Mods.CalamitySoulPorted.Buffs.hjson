@@ -17,3 +17,8 @@ EnchBloodflareOverSatuBuff: {
 	DisplayName: Ench Bloodflare Over Satu Buff
 	Description: Mods.CalamitySoulPorted.Buffs.EnchBloodflareOverSatuBuff.Description
 }
+
+EnchShieldBuff: {
+	DisplayName: Ench Shield Buff
+	Description: Mods.CalamitySoulPorted.Buffs.EnchShieldBuff.Description
+}

@@ -62,3 +62,8 @@ TarragonEnchant: {
 	DisplayName: Tarragon Enchant
 	Tooltip: ""
 }
+
+ExoEnchant: {
+	DisplayName: Exo Enchant
+	Tooltip: ""
+}
